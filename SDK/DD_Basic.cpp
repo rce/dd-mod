@@ -10,7 +10,7 @@ namespace Classes
 {
 TArray<FNameEntry*>* FName::GNames = nullptr;
 TArray<UObject*>* UObject::GObjects = nullptr;
-UObject::ProcessEvent_t UObject::pProcessEvent = nullptr;
+void* UObject::pProcessEvent = nullptr;
 }
 
 #ifdef _MSC_VER

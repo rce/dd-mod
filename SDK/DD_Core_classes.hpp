@@ -13,15 +13,14 @@ namespace Classes
 //---------------------------------------------------------------------------
 //Classes
 //---------------------------------------------------------------------------
-	class UFunction;
+class UFunction;
 // Class Core.Object
 // 0x003C
 class UObject
 {
 public:
+	static void* pProcessEvent;
 	static TArray<UObject*>*                           GObjects;                                                 // 0x0000(0x0000)
-	typedef void(__fastcall* ProcessEvent_t)(UObject*, void*, UFunction*, void*, void*);
-	static ProcessEvent_t pProcessEvent;
 	struct FPointer                                    VfTableObject;                                            // 0x0000(0x0004) (Const, Native, EditConst, NoExport)
 	int                                                ObjectInternalInteger;                                    // 0x0004(0x0004) (Const, Native, EditConst, NoExport)
 	struct FQWord                                      ObjectFlags;                                              // 0x0008(0x0008) (Const, Native, EditConst)
@@ -64,31 +63,28 @@ public:
 			{
 				continue;
 			}
-
-			auto fullname = object->GetFullName();
-			if (fullname.rfind(std::string("DunDefViewportClient "), 0) == 0)
-				std::cout << fullname << std::endl;
-			if (fullname == name)
+	
+			if (object->GetFullName() == name)
 			{
 				return static_cast<T*>(object);
 			}
 		}
 		return nullptr;
 	}
+
 	template<typename T>
 	static T* FindObjectStartingWith(const std::string& prefix)
 	{
 		for (auto i = 0u; i < GetGlobalObjects().Num(); ++i)
 		{
 			auto object = GetGlobalObjects().GetByIndex(i);
-	
+
 			if (object == nullptr)
 			{
 				continue;
 			}
 
-			auto fullname = object->GetFullName();
-			if (fullname.rfind(prefix, 0) == 0)
+			if (object->GetFullName().rfind(prefix, 0) == 0)
 			{
 				return static_cast<T*>(object);
 			}
@@ -115,7 +111,7 @@ public:
 
 		//UObject::ProcessEvent can be found with the sig
 		//8B 46 08 25 00 02 00 00 83 C8 00 0F 84 ?? ?? ?? ?? 83 3D
-		static Fn fn = nullptr;
+		static Fn fn = (Fn)UObject::pProcessEvent;
 
 		return fn(this, function, params, nullptr);
 	}

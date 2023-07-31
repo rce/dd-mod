@@ -263,7 +263,7 @@ void MainThread()
 		const uintptr_t GNAMES_ADDR = 0x01138f14;
 		const uintptr_t GOBJECTS_ADDR = 0x0114b22c;
 
-		UObject::pProcessEvent = (UObject::ProcessEvent_t) PROCESSEVENT_ADDR;
+		UObject::pProcessEvent = (void*) PROCESSEVENT_ADDR;
 		FName::GNames = (TArray<FNameEntry*>*) GNAMES_ADDR;
 		UObject::GObjects =(TArray<UObject*>*) GOBJECTS_ADDR;
 
@@ -276,7 +276,7 @@ void MainThread()
 			std::cout << "pProcessEvent: " << HEX(pProcessEvent) << std::endl;
 			//pProcessEvent: 
 
-			UObject::pProcessEvent = (UObject::ProcessEvent_t)pProcessEvent;
+			UObject::pProcessEvent = pProcessEvent;
 		}
 		else
 		{
@@ -290,7 +290,7 @@ void MainThread()
 			std::cout << "pProcessEvent: " << HEX(pProcessEvent) << std::endl;
 			//pProcessEvent: 0060A640
 
-			UObject::pProcessEvent = (UObject::ProcessEvent_t)pProcessEvent;
+			UObject::pProcessEvent = pProcessEvent;
 		}
 		else
 		{
