@@ -71,6 +71,19 @@ void ProcessEventHook(UObject* pObject, UFunction* pFunction, void* pParms, void
 	auto object_name = pObject->GetFullName();
 	auto function_name = pFunction->GetFullName();
 
+	if (pObject != nullptr && pObject->IsA(UDunDefViewportClient::StaticClass()))
+	{
+		UDunDefViewportClient* pViewport = static_cast<UDunDefViewportClient*>(pObject);
+		if (GetAsyncKeyState(VK_END) & 0x01)
+		{
+			auto c = pViewport->GetPlayerController();
+			if (c && c->IsA(ADunDefPlayerController::StaticClass()))
+			{
+				auto c2 = static_cast<ADunDefPlayerController*>(c);
+				c2->ActivateCrystalForAllPlayers();
+			}
+		}
+	}
 
 	if (function_name == "Function UDKGame.DunDefViewportClient.PostRender")
 	{
