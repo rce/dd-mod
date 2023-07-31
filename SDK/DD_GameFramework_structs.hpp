@@ -91,9 +91,9 @@ enum class EZoneState : uint8_t
 // 0x000C
 struct FBehaviorEntry
 {
-	class UGameCrowdAgentBehavior*                     BehaviorArchetype;                                        // 0x0000(0x0004)
-	float                                              BehaviorFrequency;                                        // 0x0004(0x0004)
-	unsigned long                                      bNeverRepeat : 1;                                         // 0x0008(0x0004)
+	class UGameCrowdAgentBehavior*                     BehaviorArchetype;                                        // 0x0000(0x0004) (Edit)
+	float                                              BehaviorFrequency;                                        // 0x0004(0x0004) (Edit)
+	unsigned long                                      bNeverRepeat : 1;                                         // 0x0008(0x0004) (Edit)
 	unsigned long                                      bHasBeenUsed : 1;                                         // 0x0008(0x0004)
 	unsigned long                                      bCanBeUsed : 1;                                           // 0x0008(0x0004)
 };
@@ -110,26 +110,26 @@ struct FRecentInteraction
 // 0x0014
 struct FGameCrowdAttachmentInfo
 {
-	class UStaticMesh*                                 StaticMesh;                                               // 0x0000(0x0004)
-	float                                              Chance;                                                   // 0x0004(0x0004)
-	struct FVector                                     Scale3D;                                                  // 0x0008(0x000C)
+	class UStaticMesh*                                 StaticMesh;                                               // 0x0000(0x0004) (Edit)
+	float                                              Chance;                                                   // 0x0004(0x0004) (Edit)
+	struct FVector                                     Scale3D;                                                  // 0x0008(0x000C) (Edit)
 };
 
 // ScriptStruct GameFramework.GameCrowdAgentSkeletal.GameCrowdAttachmentList
 // 0x0014
 struct FGameCrowdAttachmentList
 {
-	struct FName                                       SocketName;                                               // 0x0000(0x0008)
-	TArray<struct FGameCrowdAttachmentInfo>            List;                                                     // 0x0008(0x000C)
+	struct FName                                       SocketName;                                               // 0x0000(0x0008) (Edit)
+	TArray<struct FGameCrowdAttachmentInfo>            List;                                                     // 0x0008(0x000C) (Edit, NeedCtorLink)
 };
 
 // ScriptStruct GameFramework.SeqAct_GameCrowdSpawner.AgentArchetypeInfo
 // 0x0014
 struct FAgentArchetypeInfo
 {
-	class UObject*                                     AgentArchetype;                                           // 0x0000(0x0004)
-	float                                              FrequencyModifier;                                        // 0x0004(0x0004)
-	TArray<class UObject*>                             GroupMembers;                                             // 0x0008(0x000C)
+	class UObject*                                     AgentArchetype;                                           // 0x0000(0x0004) (Edit)
+	float                                              FrequencyModifier;                                        // 0x0004(0x0004) (Edit)
+	TArray<class UObject*>                             GroupMembers;                                             // 0x0008(0x000C) (Edit, NeedCtorLink)
 };
 
 // ScriptStruct GameFramework.GameTypes.TakeHitInfo
@@ -154,7 +154,7 @@ struct FMobileInputZone
 	struct FName                                       InputKey;                                                 // 0x0000(0x0008)
 	struct FName                                       HorizontalInputKey;                                       // 0x0008(0x0008)
 	struct FName                                       TapInputKey;                                              // 0x0010(0x0008)
-	struct FString                                     Desc;                                                     // 0x0018(0x000C)
+	struct FString                                     Desc;                                                     // 0x0018(0x000C) (AlwaysInit, NeedCtorLink)
 	int                                                Config;                                                   // 0x0024(0x0004)
 	int                                                X;                                                        // 0x0028(0x0004)
 	int                                                Y;                                                        // 0x002C(0x0004)
@@ -177,63 +177,63 @@ struct FMobileInputZone
 // 0x0004
 struct FRecoilParams
 {
-	TEnumAsByte<ERecoilStart>                          X;                                                        // 0x0000(0x0001)
-	TEnumAsByte<ERecoilStart>                          Y;                                                        // 0x0001(0x0001)
-	TEnumAsByte<ERecoilStart>                          Z;                                                        // 0x0002(0x0001)
-	unsigned char                                      Padding;                                                  // 0x0003(0x0001)
+	TEnumAsByte<ERecoilStart>                          X;                                                        // 0x0000(0x0001) (Edit)
+	TEnumAsByte<ERecoilStart>                          Y;                                                        // 0x0001(0x0001) (Edit)
+	TEnumAsByte<ERecoilStart>                          Z;                                                        // 0x0002(0x0001) (Edit)
+	unsigned char                                      Padding;                                                  // 0x0003(0x0001) (Const, Transient)
 };
 
 // ScriptStruct GameFramework.GameSkelCtrl_Recoil.RecoilDef
 // 0x0070
 struct FRecoilDef
 {
-	float                                              TimeToGo;                                                 // 0x0000(0x0004)
-	float                                              TimeDuration;                                             // 0x0004(0x0004)
-	struct FVector                                     RotAmplitude;                                             // 0x0008(0x000C)
-	struct FVector                                     RotFrequency;                                             // 0x0014(0x000C)
+	float                                              TimeToGo;                                                 // 0x0000(0x0004) (Transient)
+	float                                              TimeDuration;                                             // 0x0004(0x0004) (Edit)
+	struct FVector                                     RotAmplitude;                                             // 0x0008(0x000C) (Edit)
+	struct FVector                                     RotFrequency;                                             // 0x0014(0x000C) (Edit)
 	struct FVector                                     RotSinOffset;                                             // 0x0020(0x000C)
-	struct FRecoilParams                               RotParams;                                                // 0x002C(0x0004)
-	struct FRotator                                    RotOffset;                                                // 0x0030(0x000C)
-	struct FVector                                     LocAmplitude;                                             // 0x003C(0x000C)
-	struct FVector                                     LocFrequency;                                             // 0x0048(0x000C)
+	struct FRecoilParams                               RotParams;                                                // 0x002C(0x0004) (Edit)
+	struct FRotator                                    RotOffset;                                                // 0x0030(0x000C) (Transient)
+	struct FVector                                     LocAmplitude;                                             // 0x003C(0x000C) (Edit)
+	struct FVector                                     LocFrequency;                                             // 0x0048(0x000C) (Edit)
 	struct FVector                                     LocSinOffset;                                             // 0x0054(0x000C)
-	struct FRecoilParams                               LocParams;                                                // 0x0060(0x0004)
-	struct FVector                                     LocOffset;                                                // 0x0064(0x000C)
+	struct FRecoilParams                               LocParams;                                                // 0x0060(0x0004) (Edit)
+	struct FVector                                     LocOffset;                                                // 0x0064(0x000C) (Transient)
 };
 
 // ScriptStruct GameFramework.GameThirdPersonCamera.CamFocusPointParams
 // 0x0034
 struct FCamFocusPointParams
 {
-	class AActor*                                      FocusActor;                                               // 0x0000(0x0004)
-	struct FName                                       FocusBoneName;                                            // 0x0004(0x0008)
-	struct FVector                                     FocusWorldLoc;                                            // 0x000C(0x000C)
-	float                                              CameraFOV;                                                // 0x0018(0x0004)
-	struct FVector2D                                   InterpSpeedRange;                                         // 0x001C(0x0008)
-	struct FVector2D                                   InFocusFOV;                                               // 0x0024(0x0008)
-	unsigned long                                      bAlwaysFocus : 1;                                         // 0x002C(0x0004)
-	unsigned long                                      bAdjustCamera : 1;                                        // 0x002C(0x0004)
-	unsigned long                                      bIgnoreTrace : 1;                                         // 0x002C(0x0004)
-	float                                              FocusPitchOffsetDeg;                                      // 0x0030(0x0004)
+	class AActor*                                      FocusActor;                                               // 0x0000(0x0004) (Edit)
+	struct FName                                       FocusBoneName;                                            // 0x0004(0x0008) (Edit)
+	struct FVector                                     FocusWorldLoc;                                            // 0x000C(0x000C) (Edit)
+	float                                              CameraFOV;                                                // 0x0018(0x0004) (Edit)
+	struct FVector2D                                   InterpSpeedRange;                                         // 0x001C(0x0008) (Edit)
+	struct FVector2D                                   InFocusFOV;                                               // 0x0024(0x0008) (Edit)
+	unsigned long                                      bAlwaysFocus : 1;                                         // 0x002C(0x0004) (Edit)
+	unsigned long                                      bAdjustCamera : 1;                                        // 0x002C(0x0004) (Edit)
+	unsigned long                                      bIgnoreTrace : 1;                                         // 0x002C(0x0004) (Edit)
+	float                                              FocusPitchOffsetDeg;                                      // 0x0030(0x0004) (Edit)
 };
 
 // ScriptStruct GameFramework.GameThirdPersonCamera.PenetrationAvoidanceFeeler
 // 0x0020
 struct FPenetrationAvoidanceFeeler
 {
-	struct FRotator                                    AdjustmentRot;                                            // 0x0000(0x000C)
-	float                                              WorldWeight;                                              // 0x000C(0x0004)
-	float                                              PawnWeight;                                               // 0x0010(0x0004)
-	struct FVector                                     Extent;                                                   // 0x0014(0x000C)
+	struct FRotator                                    AdjustmentRot;                                            // 0x0000(0x000C) (Edit)
+	float                                              WorldWeight;                                              // 0x000C(0x0004) (Edit)
+	float                                              PawnWeight;                                               // 0x0010(0x0004) (Edit)
+	struct FVector                                     Extent;                                                   // 0x0014(0x000C) (Edit)
 };
 
 // ScriptStruct GameFramework.GameThirdPersonCameraMode.ViewOffsetData
 // 0x0024
 struct FViewOffsetData
 {
-	struct FVector                                     OffsetHigh;                                               // 0x0000(0x000C)
-	struct FVector                                     OffsetMid;                                                // 0x000C(0x000C)
-	struct FVector                                     OffsetLow;                                                // 0x0018(0x000C)
+	struct FVector                                     OffsetHigh;                                               // 0x0000(0x000C) (Edit)
+	struct FVector                                     OffsetMid;                                                // 0x000C(0x000C) (Edit)
+	struct FVector                                     OffsetLow;                                                // 0x0018(0x000C) (Edit)
 };
 
 // ScriptStruct GameFramework.GameTypes.SpecialMoveStruct
@@ -250,9 +250,9 @@ struct FSpecialMoveStruct
 // 0x0010
 struct FGameSpecialMoveInfo
 {
-	struct FName                                       SpecialMoveName;                                          // 0x0000(0x0008)
-	class UClass*                                      SpecialMoveClass;                                         // 0x0008(0x0004)
-	class UGameSpecialMove*                            SpecialMoveInstance;                                      // 0x000C(0x0004)
+	struct FName                                       SpecialMoveName;                                          // 0x0000(0x0008) (Edit)
+	class UClass*                                      SpecialMoveClass;                                         // 0x0008(0x0004) (Edit)
+	class UGameSpecialMove*                            SpecialMoveInstance;                                      // 0x000C(0x0004) (Edit)
 };
 
 // ScriptStruct GameFramework.GameTypes.ShakeParams
@@ -262,7 +262,7 @@ struct FShakeParams
 	TEnumAsByte<EShakeParam>                           X;                                                        // 0x0000(0x0001)
 	TEnumAsByte<EShakeParam>                           Y;                                                        // 0x0001(0x0001)
 	TEnumAsByte<EShakeParam>                           Z;                                                        // 0x0002(0x0001)
-	unsigned char                                      Padding;                                                  // 0x0003(0x0001)
+	unsigned char                                      Padding;                                                  // 0x0003(0x0001) (Const, Transient)
 };
 
 // ScriptStruct GameFramework.GameTypes.ScreenShakeStruct

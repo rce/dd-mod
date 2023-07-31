@@ -70,15 +70,15 @@ enum class EGlyphs : uint8_t
 // 0x0024
 struct FSummonedBoosts
 {
-	TEnumAsByte<EPawnBoostType>                        boostType;                                                // 0x0000(0x0001)
+	TEnumAsByte<EPawnBoostType>                        boostType;                                                // 0x0000(0x0001) (Edit)
 	unsigned char                                      UnknownData00[0x3];                                       // 0x0001(0x0003) MISSED OFFSET
-	float                                              boostExp;                                                 // 0x0004(0x0004)
-	float                                              boostBaseValue;                                           // 0x0008(0x0004)
-	TEnumAsByte<ELevelUpValueType>                     levelUpStat;                                              // 0x000C(0x0001)
+	float                                              boostExp;                                                 // 0x0004(0x0004) (Edit)
+	float                                              boostBaseValue;                                           // 0x0008(0x0004) (Edit)
+	TEnumAsByte<ELevelUpValueType>                     levelUpStat;                                              // 0x000C(0x0001) (Edit)
 	unsigned char                                      UnknownData01[0x3];                                       // 0x000D(0x0003) MISSED OFFSET
-	unsigned long                                      bInvertValue : 1;                                         // 0x0010(0x0004)
-	TArray<float>                                      UpgradeLinearBoostMultipliers;                            // 0x0014(0x000C)
-	unsigned long                                      bDisplayToolTip : 1;                                      // 0x0020(0x0004)
+	unsigned long                                      bInvertValue : 1;                                         // 0x0010(0x0004) (Edit)
+	TArray<float>                                      UpgradeLinearBoostMultipliers;                            // 0x0014(0x000C) (Edit, NeedCtorLink)
+	unsigned long                                      bDisplayToolTip : 1;                                      // 0x0020(0x0004) (Edit)
 };
 
 // ScriptStruct DunDefSpecial.CTF_DDGRI.CTFTeamData
@@ -89,25 +89,25 @@ struct FCTFTeamData
 	int                                                TeamTowerUnits;                                           // 0x0004(0x0004)
 	struct FColor                                      TeamColor;                                                // 0x0008(0x0004)
 	struct FLinearColor                                TeamLinearColor;                                          // 0x000C(0x0010)
-	struct FString                                     TeamName;                                                 // 0x001C(0x000C)
-	TArray<class APlayerReplicationInfo*>              TeamPlayers;                                              // 0x0028(0x000C)
+	struct FString                                     TeamName;                                                 // 0x001C(0x000C) (NeedCtorLink)
+	TArray<class APlayerReplicationInfo*>              TeamPlayers;                                              // 0x0028(0x000C) (NeedCtorLink)
 };
 
 // ScriptStruct DunDefSpecial.DunDef_VerticalTowerMover.TowerInfo
 // 0x0008
 struct FTowerInfo
 {
-	class ADunDefTower*                                Tower;                                                    // 0x0000(0x0004)
-	float                                              Height;                                                   // 0x0004(0x0004)
+	class ADunDefTower*                                Tower;                                                    // 0x0000(0x0004) (Edit)
+	float                                              Height;                                                   // 0x0004(0x0004) (Edit)
 };
 
 // ScriptStruct DunDefSpecial.DunDef_VerticalTowerMover.PlatformInfo
 // 0x0014
 struct FPlatformInfo
 {
-	class AInterpActor*                                Platform;                                                 // 0x0000(0x0004)
-	float                                              OldZCoordinate;                                           // 0x0004(0x0004)
-	TArray<struct FTowerInfo>                          TowerCache;                                               // 0x0008(0x000C)
+	class AInterpActor*                                Platform;                                                 // 0x0000(0x0004) (Edit)
+	float                                              OldZCoordinate;                                           // 0x0004(0x0004) (Edit)
+	TArray<struct FTowerInfo>                          TowerCache;                                               // 0x0008(0x000C) (Edit, NeedCtorLink)
 };
 
 // ScriptStruct DunDefSpecial.DunDefTower_TripWire.BeamTrippers
@@ -115,44 +115,44 @@ struct FPlatformInfo
 struct FBeamTrippers
 {
 	class AActor*                                      BeamTripper;                                              // 0x0000(0x0004)
-	class UParticleSystemComponent*                    stunnedComponent;                                         // 0x0004(0x0004)
+	class UParticleSystemComponent*                    stunnedComponent;                                         // 0x0004(0x0004) (ExportObject, Component, EditInline)
 	float                                              LastTripTime;                                             // 0x0008(0x0004)
 	float                                              StunTime;                                                 // 0x000C(0x0004)
 	unsigned long                                      bIsStunned : 1;                                           // 0x0010(0x0004)
 	class AActor*                                      AltBeamTripper;                                           // 0x0014(0x0004)
-	class UParticleSystemComponent*                    stunnedAltComponent;                                      // 0x0018(0x0004)
+	class UParticleSystemComponent*                    stunnedAltComponent;                                      // 0x0018(0x0004) (ExportObject, Component, EditInline)
 };
 
 // ScriptStruct DunDefSpecial.DunDefMapInfo_Delivery.Times
 // 0x000C
 struct FTimes
 {
-	TArray<float>                                      waveNumber;                                               // 0x0000(0x000C)
+	TArray<float>                                      waveNumber;                                               // 0x0000(0x000C) (Edit, NeedCtorLink)
 };
 
 // ScriptStruct DunDefSpecial.DunDefMapInfo_Delivery.PerDifficulty
 // 0x000C
 struct FPerDifficulty
 {
-	TArray<float>                                      theDifficulty;                                            // 0x0000(0x000C)
+	TArray<float>                                      theDifficulty;                                            // 0x0000(0x000C) (Edit, NeedCtorLink)
 };
 
 // ScriptStruct DunDefSpecial.DunDefMapInfo_KillEnemiesTimeLimit.TimeLimitAddition
 // 0x0010
 struct FTimeLimitAddition
 {
-	int                                                Temp;                                                     // 0x0000(0x0004)
-	TArray<float>                                      PlayerIndexTimeLimitAddition;                             // 0x0004(0x000C)
+	int                                                Temp;                                                     // 0x0000(0x0004) (Transient)
+	TArray<float>                                      PlayerIndexTimeLimitAddition;                             // 0x0004(0x000C) (Edit, NeedCtorLink)
 };
 
 // ScriptStruct DunDefSpecial.DunDefPlayerAbility_StanceBase.StatMultipliers
 // 0x0010
 struct FStatMultipliers
 {
-	unsigned long                                      bInverseMult : 1;                                         // 0x0000(0x0004)
-	float                                              theMultiplier;                                            // 0x0004(0x0004)
-	float                                              HeroStatExponent;                                         // 0x0008(0x0004)
-	unsigned long                                      bUseAsPrimary : 1;                                        // 0x000C(0x0004)
+	unsigned long                                      bInverseMult : 1;                                         // 0x0000(0x0004) (Edit)
+	float                                              theMultiplier;                                            // 0x0004(0x0004) (Edit)
+	float                                              HeroStatExponent;                                         // 0x0008(0x0004) (Edit)
+	unsigned long                                      bUseAsPrimary : 1;                                        // 0x000C(0x0004) (Edit)
 };
 
 // ScriptStruct DunDefSpecial.DunDefPlayerAbility_LeapSlam.HitTarget
@@ -167,7 +167,7 @@ struct ADunDefPlayerAbility_LeapSlam_FHitTarget
 // 0x0010
 struct FPreviewPoint
 {
-	class USkeletalMeshComponent*                      PreviewMeshes;                                            // 0x0000(0x0004)
+	class USkeletalMeshComponent*                      PreviewMeshes;                                            // 0x0000(0x0004) (ExportObject, Component, EditInline)
 	struct FVector                                     PlacementPoint;                                           // 0x0004(0x000C)
 };
 
@@ -175,9 +175,9 @@ struct FPreviewPoint
 // 0x001C
 struct FSpawnSettings
 {
-	struct FRotator                                    RotationOffset;                                           // 0x0000(0x000C)
-	struct FVector                                     LocationOffset;                                           // 0x000C(0x000C)
-	class AActor*                                      SpawnActorTemplate;                                       // 0x0018(0x0004)
+	struct FRotator                                    RotationOffset;                                           // 0x0000(0x000C) (Edit)
+	struct FVector                                     LocationOffset;                                           // 0x000C(0x000C) (Edit)
+	class AActor*                                      SpawnActorTemplate;                                       // 0x0018(0x0004) (Edit)
 };
 
 // ScriptStruct DunDefSpecial.DunDefPlayerAbility_SlamDash.HitTarget
@@ -193,7 +193,7 @@ struct ADunDefPlayerAbility_SlamDash_FHitTarget
 struct FStunnedActors
 {
 	class ADunDefEnemy*                                stunnedEnemy;                                             // 0x0000(0x0004)
-	class UParticleSystemComponent*                    stunnedComponent;                                         // 0x0004(0x0004)
+	class UParticleSystemComponent*                    stunnedComponent;                                         // 0x0004(0x0004) (ExportObject, Component, EditInline)
 	float                                              stunnedStartTime;                                         // 0x0008(0x0004)
 };
 
@@ -201,42 +201,42 @@ struct FStunnedActors
 // 0x0080
 struct FGlyphPattern
 {
-	struct FString                                     Description;                                              // 0x0000(0x000C)
-	TEnumAsByte<EGlyphs>                               glyph[0x3];                                               // 0x000C(0x0001)
+	struct FString                                     Description;                                              // 0x0000(0x000C) (Edit, NeedCtorLink)
+	TEnumAsByte<EGlyphs>                               glyph[0x3];                                               // 0x000C(0x0001) (Edit)
 	unsigned char                                      UnknownData00[0x1];                                       // 0x000F(0x0001) MISSED OFFSET
-	unsigned long                                      bAffectsPlayers : 1;                                      // 0x0010(0x0004)
-	unsigned long                                      bAffectsTowers : 1;                                       // 0x0010(0x0004)
-	unsigned long                                      bAffectsEnemies : 1;                                      // 0x0010(0x0004)
-	unsigned long                                      bAffectsAllies : 1;                                       // 0x0010(0x0004)
-	unsigned long                                      bAffectsNonAllies : 1;                                    // 0x0010(0x0004)
-	unsigned long                                      bPositiveBoost : 1;                                       // 0x0010(0x0004)
-	TArray<TEnumAsByte<EPawnBoostType>>                boostTypes;                                               // 0x0014(0x000C)
-	float                                              PctToAffect;                                              // 0x0020(0x0004)
-	float                                              PctToAffectExp;                                           // 0x0024(0x0004)
-	float                                              PctToAffectMax;                                           // 0x0028(0x0004)
-	unsigned long                                      PctToAffectInvert : 1;                                    // 0x002C(0x0004)
-	float                                              dmgBoost;                                                 // 0x0030(0x0004)
-	float                                              dmgBoostExp;                                              // 0x0034(0x0004)
-	unsigned long                                      resistanceBoostInvert : 1;                                // 0x0038(0x0004)
-	unsigned long                                      dmgBoostInvert : 1;                                       // 0x0038(0x0004)
-	float                                              resistanceBoost;                                          // 0x003C(0x0004)
-	float                                              resistanceBoostExp;                                       // 0x0040(0x0004)
-	float                                              ActiveTime;                                               // 0x0044(0x0004)
-	unsigned long                                      bHealthAsDmg : 1;                                         // 0x0048(0x0004)
-	float                                              HealthModifyPct;                                          // 0x004C(0x0004)
-	float                                              HealthPctToHealExp;                                       // 0x0050(0x0004)
-	float                                              HealthMaxHealPct;                                         // 0x0054(0x0004)
-	class UClass*                                      dmgType;                                                  // 0x0058(0x0004)
-	TArray<class UClass*>                              disableAbilitiesofType;                                   // 0x005C(0x000C)
-	unsigned long                                      SPEC_DoTowerLevels : 1;                                   // 0x0068(0x0004)
-	unsigned long                                      SPEC_DownGradeTower : 1;                                  // 0x0068(0x0004)
-	int                                                SPEC_numTowersToLevel;                                    // 0x006C(0x0004)
-	int                                                SPEC_towerUpgradeLevel;                                   // 0x0070(0x0004)
-	unsigned long                                      SPEC_GoldEnemies : 1;                                     // 0x0074(0x0004)
-	unsigned long                                      SPEC_StunEnemies : 1;                                     // 0x0074(0x0004)
-	unsigned long                                      SPEC_TimeDilation : 1;                                    // 0x0074(0x0004)
-	float                                              SPEC_TimeDilationAmt;                                     // 0x0078(0x0004)
-	class USoundCue*                                   patternSound;                                             // 0x007C(0x0004)
+	unsigned long                                      bAffectsPlayers : 1;                                      // 0x0010(0x0004) (Edit)
+	unsigned long                                      bAffectsTowers : 1;                                       // 0x0010(0x0004) (Edit)
+	unsigned long                                      bAffectsEnemies : 1;                                      // 0x0010(0x0004) (Edit)
+	unsigned long                                      bAffectsAllies : 1;                                       // 0x0010(0x0004) (Edit)
+	unsigned long                                      bAffectsNonAllies : 1;                                    // 0x0010(0x0004) (Edit)
+	unsigned long                                      bPositiveBoost : 1;                                       // 0x0010(0x0004) (Edit)
+	TArray<TEnumAsByte<EPawnBoostType>>                boostTypes;                                               // 0x0014(0x000C) (Edit, NeedCtorLink)
+	float                                              PctToAffect;                                              // 0x0020(0x0004) (Edit)
+	float                                              PctToAffectExp;                                           // 0x0024(0x0004) (Edit)
+	float                                              PctToAffectMax;                                           // 0x0028(0x0004) (Edit)
+	unsigned long                                      PctToAffectInvert : 1;                                    // 0x002C(0x0004) (Edit)
+	float                                              dmgBoost;                                                 // 0x0030(0x0004) (Edit)
+	float                                              dmgBoostExp;                                              // 0x0034(0x0004) (Edit)
+	unsigned long                                      resistanceBoostInvert : 1;                                // 0x0038(0x0004) (Edit)
+	unsigned long                                      dmgBoostInvert : 1;                                       // 0x0038(0x0004) (Edit)
+	float                                              resistanceBoost;                                          // 0x003C(0x0004) (Edit)
+	float                                              resistanceBoostExp;                                       // 0x0040(0x0004) (Edit)
+	float                                              ActiveTime;                                               // 0x0044(0x0004) (Edit)
+	unsigned long                                      bHealthAsDmg : 1;                                         // 0x0048(0x0004) (Edit)
+	float                                              HealthModifyPct;                                          // 0x004C(0x0004) (Edit)
+	float                                              HealthPctToHealExp;                                       // 0x0050(0x0004) (Edit)
+	float                                              HealthMaxHealPct;                                         // 0x0054(0x0004) (Edit)
+	class UClass*                                      dmgType;                                                  // 0x0058(0x0004) (Edit)
+	TArray<class UClass*>                              disableAbilitiesofType;                                   // 0x005C(0x000C) (Edit, NeedCtorLink)
+	unsigned long                                      SPEC_DoTowerLevels : 1;                                   // 0x0068(0x0004) (Edit)
+	unsigned long                                      SPEC_DownGradeTower : 1;                                  // 0x0068(0x0004) (Edit)
+	int                                                SPEC_numTowersToLevel;                                    // 0x006C(0x0004) (Edit)
+	int                                                SPEC_towerUpgradeLevel;                                   // 0x0070(0x0004) (Edit)
+	unsigned long                                      SPEC_GoldEnemies : 1;                                     // 0x0074(0x0004) (Edit)
+	unsigned long                                      SPEC_StunEnemies : 1;                                     // 0x0074(0x0004) (Edit)
+	unsigned long                                      SPEC_TimeDilation : 1;                                    // 0x0074(0x0004) (Edit)
+	float                                              SPEC_TimeDilationAmt;                                     // 0x0078(0x0004) (Edit)
+	class USoundCue*                                   patternSound;                                             // 0x007C(0x0004) (Edit)
 };
 
 // ScriptStruct DunDefSpecial.DunDefPlayerAbility_WheeloFortuna.GlyphIcon
@@ -245,30 +245,30 @@ struct FGlyphIcon
 {
 	float                                              CurrentValue;                                             // 0x0000(0x0004)
 	unsigned long                                      bStopped : 1;                                             // 0x0004(0x0004)
-	TEnumAsByte<EGlyphs>                               glyphWheelSlots[0x5];                                     // 0x0008(0x0001)
+	TEnumAsByte<EGlyphs>                               glyphWheelSlots[0x5];                                     // 0x0008(0x0001) (Edit)
 	unsigned char                                      UnknownData00[0x3];                                       // 0x000D(0x0003) MISSED OFFSET
-	float                                              spinSpeed;                                                // 0x0010(0x0004)
-	struct FName                                       ParamName;                                                // 0x0014(0x0008)
-	unsigned long                                      bScrollDown : 1;                                          // 0x001C(0x0004)
+	float                                              spinSpeed;                                                // 0x0010(0x0004) (Edit)
+	struct FName                                       ParamName;                                                // 0x0014(0x0008) (Edit)
+	unsigned long                                      bScrollDown : 1;                                          // 0x001C(0x0004) (Edit)
 };
 
 // ScriptStruct DunDefSpecial.DunDefPurifyingBomb.BonusDamageType
 // 0x0008
 struct FBonusDamageType
 {
-	TEnumAsByte<EnemyClassification>                   ClassificationType;                                       // 0x0000(0x0001)
+	TEnumAsByte<EnemyClassification>                   ClassificationType;                                       // 0x0000(0x0001) (Edit)
 	unsigned char                                      UnknownData00[0x3];                                       // 0x0001(0x0003) MISSED OFFSET
-	float                                              BonusMult;                                                // 0x0004(0x0004)
+	float                                              BonusMult;                                                // 0x0004(0x0004) (Edit)
 };
 
 // ScriptStruct DunDefSpecial.DunDefTower_Present.spawnChances
 // 0x0014
 struct FspawnChances
 {
-	class AActor*                                      ActorArchetype;                                           // 0x0000(0x0004)
-	float                                              chanceToSpawnActor;                                       // 0x0004(0x0004)
-	int                                                minNumToSpawn;                                            // 0x0008(0x0004)
-	int                                                maxNumToSpawn;                                            // 0x000C(0x0004)
+	class AActor*                                      ActorArchetype;                                           // 0x0000(0x0004) (Edit)
+	float                                              chanceToSpawnActor;                                       // 0x0004(0x0004) (Edit)
+	int                                                minNumToSpawn;                                            // 0x0008(0x0004) (Edit)
+	int                                                maxNumToSpawn;                                            // 0x000C(0x0004) (Edit)
 	unsigned long                                      bUsed : 1;                                                // 0x0010(0x0004)
 };
 
@@ -276,11 +276,11 @@ struct FspawnChances
 // 0x0020
 struct FspawnTypes
 {
-	TArray<struct FspawnChances>                       spawnType;                                                // 0x0000(0x000C)
-	float                                              spawnTypeChance;                                          // 0x000C(0x0004)
-	struct FString                                     StatDisplayName;                                          // 0x0010(0x000C)
-	unsigned long                                      bDoManaSpawn : 1;                                         // 0x001C(0x0004)
-	unsigned long                                      bSpawnDroppedEquipment : 1;                               // 0x001C(0x0004)
+	TArray<struct FspawnChances>                       spawnType;                                                // 0x0000(0x000C) (Edit, NeedCtorLink)
+	float                                              spawnTypeChance;                                          // 0x000C(0x0004) (Edit)
+	struct FString                                     StatDisplayName;                                          // 0x0010(0x000C) (Edit, Localized, NeedCtorLink)
+	unsigned long                                      bDoManaSpawn : 1;                                         // 0x001C(0x0004) (Edit)
+	unsigned long                                      bSpawnDroppedEquipment : 1;                               // 0x001C(0x0004) (Edit)
 	unsigned long                                      bFailed : 1;                                              // 0x001C(0x0004)
 };
 

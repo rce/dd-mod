@@ -18,10 +18,10 @@ class UWindowsClient : public UClient
 {
 public:
 	unsigned char                                      UnknownData00[0x13C];                                     // 0x0058(0x013C) MISSED OFFSET
-	class UClass*                                      AudioDeviceClass;                                         // 0x0194(0x0004)
+	class UClass*                                      AudioDeviceClass;                                         // 0x0194(0x0004) (Config)
 	unsigned char                                      UnknownData01[0x2C];                                      // 0x0198(0x002C) MISSED OFFSET
-	int                                                AllowJoystickInput;                                       // 0x01C4(0x0004)
-	int                                                UnlockMouse;                                              // 0x01C8(0x0004)
+	int                                                AllowJoystickInput;                                       // 0x01C4(0x0004) (Config)
+	int                                                UnlockMouse;                                              // 0x01C8(0x0004) (Config)
 	unsigned char                                      UnknownData02[0xC];                                       // 0x01CC(0x000C) MISSED OFFSET
 
 	static UClass* StaticClass()

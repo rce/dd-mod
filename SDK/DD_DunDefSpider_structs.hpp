@@ -17,31 +17,31 @@ namespace Classes
 struct FWebbedActor
 {
 	class AActor*                                      TheActor;                                                 // 0x0000(0x0004)
-	class UParticleSystemComponent*                    theEffectComponent;                                       // 0x0004(0x0004)
+	class UParticleSystemComponent*                    theEffectComponent;                                       // 0x0004(0x0004) (ExportObject, Component, EditInline)
 };
 
 // ScriptStruct DunDefSpider.DunDefMapInfo_VDay.WaveKillCounts
 // 0x000C
 struct FWaveKillCounts
 {
-	TArray<int>                                        KillCountsPerWave;                                        // 0x0000(0x000C)
+	TArray<int>                                        KillCountsPerWave;                                        // 0x0000(0x000C) (Edit, NeedCtorLink)
 };
 
 // ScriptStruct DunDefSpider.DunDefMapInfo_VDay.EnemyGenderOverride
 // 0x000C
 struct FEnemyGenderOverride
 {
-	class ADunDefEnemy*                                OriginalArchetype;                                        // 0x0000(0x0004)
-	class ADunDefEnemy*                                ReplacementGenderArchetypeBoy;                            // 0x0004(0x0004)
-	class ADunDefEnemy*                                ReplacementGenderArchetypeGirl;                           // 0x0008(0x0004)
+	class ADunDefEnemy*                                OriginalArchetype;                                        // 0x0000(0x0004) (Edit)
+	class ADunDefEnemy*                                ReplacementGenderArchetypeBoy;                            // 0x0004(0x0004) (Edit)
+	class ADunDefEnemy*                                ReplacementGenderArchetypeGirl;                           // 0x0008(0x0004) (Edit)
 };
 
 // ScriptStruct DunDefSpider.DunDefMapInfo_PortalDefense.MinMaxValues
 // 0x0008
 struct FMinMaxValues
 {
-	float                                              MinValue;                                                 // 0x0000(0x0004)
-	float                                              MaxValue;                                                 // 0x0004(0x0004)
+	float                                              MinValue;                                                 // 0x0000(0x0004) (Edit)
+	float                                              MaxValue;                                                 // 0x0004(0x0004) (Edit)
 };
 
 }

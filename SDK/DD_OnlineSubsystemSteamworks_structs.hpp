@@ -81,7 +81,7 @@ enum class ELeaderboardUpdateType : uint8_t
 struct FServerQueryToRulesResponseMapping
 {
 	int                                                Query;                                                    // 0x0000(0x0004)
-	struct FPointer                                    Response;                                                 // 0x0004(0x0004)
+	struct FPointer                                    Response;                                                 // 0x0004(0x0004) (Native)
 };
 
 // ScriptStruct OnlineSubsystemSteamworks.OnlineGameInterfaceSteamworks.ServerQueryToPingResponseMapping
@@ -89,7 +89,7 @@ struct FServerQueryToRulesResponseMapping
 struct FServerQueryToPingResponseMapping
 {
 	int                                                Query;                                                    // 0x0000(0x0004)
-	struct FPointer                                    Response;                                                 // 0x0004(0x0004)
+	struct FPointer                                    Response;                                                 // 0x0004(0x0004) (Native)
 };
 
 // ScriptStruct OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.LocalTalkerSteam
@@ -104,9 +104,9 @@ struct FLocalTalkerSteam : public FLocalTalker
 struct FProfileSettingsCache
 {
 	class UOnlineProfileSettings*                      Profile;                                                  // 0x0000(0x0004)
-	TArray<struct FScriptDelegate>                     ReadDelegates;                                            // 0x0004(0x000C)
-	TArray<struct FScriptDelegate>                     WriteDelegates;                                           // 0x0010(0x000C)
-	TArray<struct FScriptDelegate>                     ProfileDataChangedDelegates;                              // 0x001C(0x000C)
+	TArray<struct FScriptDelegate>                     ReadDelegates;                                            // 0x0004(0x000C) (NeedCtorLink)
+	TArray<struct FScriptDelegate>                     WriteDelegates;                                           // 0x0010(0x000C) (NeedCtorLink)
+	TArray<struct FScriptDelegate>                     ProfileDataChangedDelegates;                              // 0x001C(0x000C) (NeedCtorLink)
 };
 
 // ScriptStruct OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.DeviceIdCache
@@ -114,26 +114,26 @@ struct FProfileSettingsCache
 struct FDeviceIdCache
 {
 	int                                                DeviceID;                                                 // 0x0000(0x0004)
-	struct FScriptDelegate                             DeviceSelectionMulticast;                                 // 0x0004(0x000C)
-	TArray<struct FScriptDelegate>                     DeviceSelectionDelegates;                                 // 0x0010(0x000C)
+	struct FScriptDelegate                             DeviceSelectionMulticast;                                 // 0x0004(0x000C) (NeedCtorLink)
+	TArray<struct FScriptDelegate>                     DeviceSelectionDelegates;                                 // 0x0010(0x000C) (NeedCtorLink)
 };
 
 // ScriptStruct OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.MappedAchievement
 // 0x0010
 struct FMappedAchievement
 {
-	struct FString                                     SteamAchievementID;                                       // 0x0000(0x000C)
-	unsigned long                                      bIsActive : 1;                                            // 0x000C(0x0004)
+	struct FString                                     SteamAchievementID;                                       // 0x0000(0x000C) (Config, NeedCtorLink)
+	unsigned long                                      bIsActive : 1;                                            // 0x000C(0x0004) (Config)
 };
 
 // ScriptStruct OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.QueuedAvatarRequest
 // 0x001C
 struct FQueuedAvatarRequest
 {
-	float                                              CheckTime;                                                // 0x0000(0x0004)
-	int                                                NumberOfAttempts;                                         // 0x0004(0x0004)
-	struct FUniqueNetId                                PlayerNetId;                                              // 0x0008(0x0008)
-	struct FScriptDelegate                             ReadOnlineAvatarCompleteDelegate;                         // 0x0010(0x000C)
+	float                                              CheckTime;                                                // 0x0000(0x0004) (Const)
+	int                                                NumberOfAttempts;                                         // 0x0004(0x0004) (Const)
+	struct FUniqueNetId                                PlayerNetId;                                              // 0x0008(0x0008) (Const)
+	struct FScriptDelegate                             ReadOnlineAvatarCompleteDelegate;                         // 0x0010(0x000C) (Const, NeedCtorLink)
 };
 
 // ScriptStruct OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AchievementMappingInfo
@@ -162,30 +162,30 @@ struct FAchievementProgressStat
 // 0x0008
 struct FLeaderboardHandle
 {
-	struct FQWord                                      Dud;                                                      // 0x0000(0x0008)
+	struct FQWord                                      Dud;                                                      // 0x0000(0x0008) (Const)
 };
 
 // ScriptStruct OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.LeaderboardTemplate
 // 0x0024
 struct FLeaderboardTemplate
 {
-	struct FString                                     LeaderboardName;                                          // 0x0000(0x000C)
+	struct FString                                     LeaderboardName;                                          // 0x0000(0x000C) (NeedCtorLink)
 	TEnumAsByte<ELeaderboardUpdateType>                UpdateType;                                               // 0x000C(0x0001)
 	unsigned char                                      UnknownData00[0x3];                                       // 0x000D(0x0003) MISSED OFFSET
-	int                                                LeaderboardSize;                                          // 0x0010(0x0004)
-	TEnumAsByte<ELeaderboardSortType>                  SortType;                                                 // 0x0014(0x0001)
-	TEnumAsByte<ELeaderboardFormat>                    DisplayFormat;                                            // 0x0015(0x0001)
+	int                                                LeaderboardSize;                                          // 0x0010(0x0004) (Const)
+	TEnumAsByte<ELeaderboardSortType>                  SortType;                                                 // 0x0014(0x0001) (Const)
+	TEnumAsByte<ELeaderboardFormat>                    DisplayFormat;                                            // 0x0015(0x0001) (Const)
 	unsigned char                                      UnknownData01[0x2];                                       // 0x0016(0x0002) MISSED OFFSET
-	struct FLeaderboardHandle                          LeaderboardRef;                                           // 0x0018(0x0008)
-	unsigned long                                      bLeaderboardInitializing : 1;                             // 0x0020(0x0004)
-	unsigned long                                      bLeaderboardInitiated : 1;                                // 0x0020(0x0004)
+	struct FLeaderboardHandle                          LeaderboardRef;                                           // 0x0018(0x0008) (Const)
+	unsigned long                                      bLeaderboardInitializing : 1;                             // 0x0020(0x0004) (Const)
+	unsigned long                                      bLeaderboardInitiated : 1;                                // 0x0020(0x0004) (Const)
 };
 
 // ScriptStruct OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.DeferredLeaderboardRead
 // 0x0018
 struct FDeferredLeaderboardRead
 {
-	struct FString                                     LeaderboardName;                                          // 0x0000(0x000C)
+	struct FString                                     LeaderboardName;                                          // 0x0000(0x000C) (NeedCtorLink)
 	unsigned char                                      RequestType;                                              // 0x000C(0x0001)
 	unsigned char                                      UnknownData00[0x3];                                       // 0x000D(0x0003) MISSED OFFSET
 	int                                                Start;                                                    // 0x0010(0x0004)
@@ -196,9 +196,9 @@ struct FDeferredLeaderboardRead
 // 0x001C
 struct FDeferredLeaderboardWrite
 {
-	struct FString                                     LeaderboardName;                                          // 0x0000(0x000C)
+	struct FString                                     LeaderboardName;                                          // 0x0000(0x000C) (NeedCtorLink)
 	int                                                Score;                                                    // 0x000C(0x0004)
-	TArray<int>                                        WriteData;                                                // 0x0010(0x000C)
+	TArray<int>                                        WriteData;                                                // 0x0010(0x000C) (NeedCtorLink)
 };
 
 // ScriptStruct OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.TalkerIDMap
@@ -206,7 +206,7 @@ struct FDeferredLeaderboardWrite
 struct FTalkerIDMap
 {
 	struct FUniqueNetId                                TalkerId;                                                 // 0x0000(0x0008)
-	class UAudioComponent*                             TalkerAudioComponent;                                     // 0x0008(0x0004)
+	class UAudioComponent*                             TalkerAudioComponent;                                     // 0x0008(0x0004) (ExportObject, Component, EditInline)
 };
 
 // ScriptStruct OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.LeaderboardEntry
@@ -216,7 +216,7 @@ struct FLeaderboardEntry
 	struct FUniqueNetId                                PlayerUID;                                                // 0x0000(0x0008)
 	int                                                Rank;                                                     // 0x0008(0x0004)
 	int                                                Score;                                                    // 0x000C(0x0004)
-	TArray<int>                                        ReadData;                                                 // 0x0010(0x000C)
+	TArray<int>                                        ReadData;                                                 // 0x0010(0x000C) (NeedCtorLink)
 };
 
 // ScriptStruct OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ViewIdToLeaderboardName
@@ -224,7 +224,7 @@ struct FLeaderboardEntry
 struct FViewIdToLeaderboardName
 {
 	int                                                ViewId;                                                   // 0x0000(0x0004)
-	struct FString                                     LeaderboardName;                                          // 0x0004(0x000C)
+	struct FString                                     LeaderboardName;                                          // 0x0004(0x000C) (NeedCtorLink)
 };
 
 }

@@ -39,13 +39,13 @@ struct FPuzzlePiece
 // 0x0034
 struct FTentacle
 {
-	class AKrakenTentacle*                             theTentacle;                                              // 0x0000(0x0004)
+	class AKrakenTentacle*                             theTentacle;                                              // 0x0000(0x0004) (Edit)
 	unsigned long                                      bInShell : 1;                                             // 0x0004(0x0004)
-	struct FName                                       SkelControlName;                                          // 0x0008(0x0008)
-	struct FName                                       BasedSocket;                                              // 0x0010(0x0008)
-	struct FName                                       RootBoneName;                                             // 0x0018(0x0008)
-	struct FName                                       ProjectileSocketName;                                     // 0x0020(0x0008)
-	struct FName                                       RetreatVFXSocketName;                                     // 0x0028(0x0008)
+	struct FName                                       SkelControlName;                                          // 0x0008(0x0008) (Edit)
+	struct FName                                       BasedSocket;                                              // 0x0010(0x0008) (Edit)
+	struct FName                                       RootBoneName;                                             // 0x0018(0x0008) (Edit)
+	struct FName                                       ProjectileSocketName;                                     // 0x0020(0x0008) (Edit)
+	struct FName                                       RetreatVFXSocketName;                                     // 0x0028(0x0008) (Edit)
 	class USkelControlSingleBone*                      TentacleController;                                       // 0x0030(0x0004)
 };
 

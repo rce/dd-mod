@@ -17,8 +17,8 @@ namespace Classes
 class UDunDefGameStorageUpdates : public UObject
 {
 public:
-	struct FGameStorage_FIXED_35                       StorageData_35;                                           // 0x003C(0x01EC)
-	struct FGameStorage_FIXED_36                       StorageData_36;                                           // 0x0228(0x01F8)
+	struct FGameStorage_FIXED_35                       StorageData_35;                                           // 0x003C(0x01EC) (NeedCtorLink)
+	struct FGameStorage_FIXED_36                       StorageData_36;                                           // 0x0228(0x01F8) (NeedCtorLink)
 
 	static UClass* StaticClass()
 	{

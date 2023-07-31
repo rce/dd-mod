@@ -17,13 +17,13 @@ namespace Classes
 class ADunDefWeapon_MagicStaff_Channeling : public ADunDefWeapon_MagicStaff
 {
 public:
-	class ADunDefProjectile*                           ChannelingProjectileTemplate;                             // 0x0614(0x0004)
-	float                                              ChannelingProjectileFireSpeed;                            // 0x0618(0x0004)
-	float                                              ChannelingProjectileDamageMultiplier;                     // 0x061C(0x0004)
-	struct FVector                                     ChannelingProjectileLocationOffset;                       // 0x0620(0x000C)
-	float                                              ChannelingRangeMultiplier;                                // 0x062C(0x0004)
-	TScriptInterface<class UDunDefTargetableInterface> act;                                                      // 0x0630(0x0008)
-	TArray<TScriptInterface<class UDunDefTargetableInterface>> Enemies;                                                  // 0x0638(0x000C)
+	class ADunDefProjectile*                           ChannelingProjectileTemplate;                             // 0x0614(0x0004) (Edit)
+	float                                              ChannelingProjectileFireSpeed;                            // 0x0618(0x0004) (Edit)
+	float                                              ChannelingProjectileDamageMultiplier;                     // 0x061C(0x0004) (Edit)
+	struct FVector                                     ChannelingProjectileLocationOffset;                       // 0x0620(0x000C) (Edit)
+	float                                              ChannelingRangeMultiplier;                                // 0x062C(0x0004) (Edit)
+	TScriptInterface<class UDunDefTargetableInterface> act;                                                      // 0x0630(0x0008) (Transient)
+	TArray<TScriptInterface<class UDunDefTargetableInterface>> Enemies;                                                  // 0x0638(0x000C) (Transient, NeedCtorLink)
 
 	static UClass* StaticClass()
 	{

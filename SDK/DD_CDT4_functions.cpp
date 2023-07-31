@@ -14,12 +14,25 @@ namespace Classes
 
 // Function CDT4.HeroEquipment_Familiar_CoreHealer.AddRandomizeValues
 // (Defined, HasOptionalParms, Public)
+// Parameters:
+// float                          equipmentQuality               (Parm)
+// bool                           doResetStatsToTemplate         (OptionalParm, Parm)
+// bool                           bDontUseMissionRandomizerMultiplier (OptionalParm, Parm)
+// float                          RandomizerMultiplierOverride   (OptionalParm, Parm)
+// bool                           bIsForShop                     (OptionalParm, Parm)
+// bool                           bAllowTranscendentGear         (OptionalParm, Parm)
 
-void UHeroEquipment_Familiar_CoreHealer::AddRandomizeValues()
+void UHeroEquipment_Familiar_CoreHealer::AddRandomizeValues(float equipmentQuality, bool doResetStatsToTemplate, bool bDontUseMissionRandomizerMultiplier, float RandomizerMultiplierOverride, bool bIsForShop, bool bAllowTranscendentGear)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function CDT4.HeroEquipment_Familiar_CoreHealer.AddRandomizeValues");
 
 	UHeroEquipment_Familiar_CoreHealer_AddRandomizeValues_Params params;
+	params.equipmentQuality = equipmentQuality;
+	params.doResetStatsToTemplate = doResetStatsToTemplate;
+	params.bDontUseMissionRandomizerMultiplier = bDontUseMissionRandomizerMultiplier;
+	params.RandomizerMultiplierOverride = RandomizerMultiplierOverride;
+	params.bIsForShop = bIsForShop;
+	params.bAllowTranscendentGear = bAllowTranscendentGear;
 
 	auto flags = fn->FunctionFlags;
 
@@ -31,46 +44,71 @@ void UHeroEquipment_Familiar_CoreHealer::AddRandomizeValues()
 
 // Function CDT4.HeroEquipment_Familiar_CoreHealer.GetStatLevelUpAmountIterations
 // (Defined, HasOptionalParms, Public)
+// Parameters:
+// TEnumAsByte<EEquipmentStatType> EQS                            (Parm)
+// int                            Value                          (Parm)
+// int                            statSubIndex                   (OptionalParm, Parm)
+// int                            ReturnValue                    (Parm, OutParm, ReturnParm)
 
-void UHeroEquipment_Familiar_CoreHealer::GetStatLevelUpAmountIterations()
+int UHeroEquipment_Familiar_CoreHealer::GetStatLevelUpAmountIterations(TEnumAsByte<EEquipmentStatType> EQS, int Value, int statSubIndex)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function CDT4.HeroEquipment_Familiar_CoreHealer.GetStatLevelUpAmountIterations");
 
 	UHeroEquipment_Familiar_CoreHealer_GetStatLevelUpAmountIterations_Params params;
+	params.EQS = EQS;
+	params.Value = Value;
+	params.statSubIndex = statSubIndex;
 
 	auto flags = fn->FunctionFlags;
 
 	UObject::ProcessEvent(fn, &params);
 
 	fn->FunctionFlags = flags;
+
+	return params.ReturnValue;
 }
 
 
 // Function CDT4.HeroEquipment_Familiar_CoreHealer.GetNextStatLevelUpValue
 // (Defined, HasOptionalParms, Public)
+// Parameters:
+// TEnumAsByte<EEquipmentStatType> EQS                            (Parm)
+// int                            statSubIndex                   (OptionalParm, Parm)
+// bool                           SetAsValue                     (OptionalParm, Parm)
+// int                            ReturnValue                    (Parm, OutParm, ReturnParm)
 
-void UHeroEquipment_Familiar_CoreHealer::GetNextStatLevelUpValue()
+int UHeroEquipment_Familiar_CoreHealer::GetNextStatLevelUpValue(TEnumAsByte<EEquipmentStatType> EQS, int statSubIndex, bool SetAsValue)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function CDT4.HeroEquipment_Familiar_CoreHealer.GetNextStatLevelUpValue");
 
 	UHeroEquipment_Familiar_CoreHealer_GetNextStatLevelUpValue_Params params;
+	params.EQS = EQS;
+	params.statSubIndex = statSubIndex;
+	params.SetAsValue = SetAsValue;
 
 	auto flags = fn->FunctionFlags;
 
 	UObject::ProcessEvent(fn, &params);
 
 	fn->FunctionFlags = flags;
+
+	return params.ReturnValue;
 }
 
 
 // Function CDT4.HeroEquipment_Familiar_CoreHealer.InitFromNetInfo
 // (Defined, HasOptionalParms, Public)
+// Parameters:
+// struct FEquipmentNetInfo       Info                           (Parm, NeedCtorLink)
+// class UObject*                 fromDroppedEquipment           (OptionalParm, Parm)
 
-void UHeroEquipment_Familiar_CoreHealer::InitFromNetInfo()
+void UHeroEquipment_Familiar_CoreHealer::InitFromNetInfo(const struct FEquipmentNetInfo& Info, class UObject* fromDroppedEquipment)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function CDT4.HeroEquipment_Familiar_CoreHealer.InitFromNetInfo");
 
 	UHeroEquipment_Familiar_CoreHealer_InitFromNetInfo_Params params;
+	params.Info = Info;
+	params.fromDroppedEquipment = fromDroppedEquipment;
 
 	auto flags = fn->FunctionFlags;
 
@@ -82,42 +120,68 @@ void UHeroEquipment_Familiar_CoreHealer::InitFromNetInfo()
 
 // Function CDT4.HeroEquipment_Familiar_CoreHealer.CheckStatLevelUpIterations
 // (Defined, Public)
+// Parameters:
+// TEnumAsByte<EEquipmentStatType> EQS                            (Parm)
+// int                            statSubIndex                   (Parm)
+// int                            EquipmentLevelToCheck          (Parm)
+// float                          Value                          (Parm)
+// bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
-void UHeroEquipment_Familiar_CoreHealer::CheckStatLevelUpIterations()
+bool UHeroEquipment_Familiar_CoreHealer::CheckStatLevelUpIterations(TEnumAsByte<EEquipmentStatType> EQS, int statSubIndex, int EquipmentLevelToCheck, float Value)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function CDT4.HeroEquipment_Familiar_CoreHealer.CheckStatLevelUpIterations");
 
 	UHeroEquipment_Familiar_CoreHealer_CheckStatLevelUpIterations_Params params;
+	params.EQS = EQS;
+	params.statSubIndex = statSubIndex;
+	params.EquipmentLevelToCheck = EquipmentLevelToCheck;
+	params.Value = Value;
 
 	auto flags = fn->FunctionFlags;
 
 	UObject::ProcessEvent(fn, &params);
 
 	fn->FunctionFlags = flags;
+
+	return params.ReturnValue;
 }
 
 
 // Function CDT4.HeroEquipment_Familiar_CoreHealer.AllowStatLevelUp
 // (Defined, HasOptionalParms, Public)
+// Parameters:
+// TEnumAsByte<EEquipmentStatType> EQS                            (Parm)
+// int                            statSubIndex                   (OptionalParm, Parm)
+// bool                           IsInForgeUI                    (OptionalParm, Parm)
+// bool                           bIgnoreManaRequirement         (OptionalParm, Parm)
+// bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
-void UHeroEquipment_Familiar_CoreHealer::AllowStatLevelUp()
+bool UHeroEquipment_Familiar_CoreHealer::AllowStatLevelUp(TEnumAsByte<EEquipmentStatType> EQS, int statSubIndex, bool IsInForgeUI, bool bIgnoreManaRequirement)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function CDT4.HeroEquipment_Familiar_CoreHealer.AllowStatLevelUp");
 
 	UHeroEquipment_Familiar_CoreHealer_AllowStatLevelUp_Params params;
+	params.EQS = EQS;
+	params.statSubIndex = statSubIndex;
+	params.IsInForgeUI = IsInForgeUI;
+	params.bIgnoreManaRequirement = bIgnoreManaRequirement;
 
 	auto flags = fn->FunctionFlags;
 
 	UObject::ProcessEvent(fn, &params);
 
 	fn->FunctionFlags = flags;
+
+	return params.ReturnValue;
 }
 
 
 // Function CDT4.HeroEquipment_Familiar_CoreHealer.GetWeaponDamage
 // (Defined, Public)
+// Parameters:
+// int                            ReturnValue                    (Parm, OutParm, ReturnParm)
 
-void UHeroEquipment_Familiar_CoreHealer::GetWeaponDamage()
+int UHeroEquipment_Familiar_CoreHealer::GetWeaponDamage()
 {
 	static auto fn = UObject::FindObject<UFunction>("Function CDT4.HeroEquipment_Familiar_CoreHealer.GetWeaponDamage");
 
@@ -128,13 +192,17 @@ void UHeroEquipment_Familiar_CoreHealer::GetWeaponDamage()
 	UObject::ProcessEvent(fn, &params);
 
 	fn->FunctionFlags = flags;
+
+	return params.ReturnValue;
 }
 
 
 // Function CDT4.HeroEquipment_Familiar_CoreHealer.ApplyPrimaryDamageMultiplierDisplay
 // (Defined, Public, HasOutParms)
+// Parameters:
+// int                            StatValue                      (Parm, OutParm)
 
-void UHeroEquipment_Familiar_CoreHealer::ApplyPrimaryDamageMultiplierDisplay()
+void UHeroEquipment_Familiar_CoreHealer::ApplyPrimaryDamageMultiplierDisplay(int* StatValue)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function CDT4.HeroEquipment_Familiar_CoreHealer.ApplyPrimaryDamageMultiplierDisplay");
 
@@ -145,34 +213,50 @@ void UHeroEquipment_Familiar_CoreHealer::ApplyPrimaryDamageMultiplierDisplay()
 	UObject::ProcessEvent(fn, &params);
 
 	fn->FunctionFlags = flags;
+
+	if (StatValue != nullptr)
+		*StatValue = params.StatValue;
 }
 
 
 // Function CDT4.HeroEquipment_Familiar_CoreHealer.GetEquipmentStatValue
 // (Defined, HasOptionalParms, Public)
+// Parameters:
+// TEnumAsByte<EEquipmentStatType> equipmentStatType              (Parm)
+// bool                           returnFinalAddedValue          (OptionalParm, Parm)
+// bool                           includeStatLevelUp             (OptionalParm, Parm)
+// float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
-void UHeroEquipment_Familiar_CoreHealer::GetEquipmentStatValue()
+float UHeroEquipment_Familiar_CoreHealer::GetEquipmentStatValue(TEnumAsByte<EEquipmentStatType> equipmentStatType, bool returnFinalAddedValue, bool includeStatLevelUp)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function CDT4.HeroEquipment_Familiar_CoreHealer.GetEquipmentStatValue");
 
 	UHeroEquipment_Familiar_CoreHealer_GetEquipmentStatValue_Params params;
+	params.equipmentStatType = equipmentStatType;
+	params.returnFinalAddedValue = returnFinalAddedValue;
+	params.includeStatLevelUp = includeStatLevelUp;
 
 	auto flags = fn->FunctionFlags;
 
 	UObject::ProcessEvent(fn, &params);
 
 	fn->FunctionFlags = flags;
+
+	return params.ReturnValue;
 }
 
 
 // Function CDT4.HeroEquipment_Familiar_CoreHealer.NotifyEquipment_PawnAttacked
 // (Public)
+// Parameters:
+// int                            FireMode                       (Parm)
 
-void UHeroEquipment_Familiar_CoreHealer::NotifyEquipment_PawnAttacked()
+void UHeroEquipment_Familiar_CoreHealer::NotifyEquipment_PawnAttacked(int FireMode)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function CDT4.HeroEquipment_Familiar_CoreHealer.NotifyEquipment_PawnAttacked");
 
 	UHeroEquipment_Familiar_CoreHealer_NotifyEquipment_PawnAttacked_Params params;
+	params.FireMode = FireMode;
 
 	auto flags = fn->FunctionFlags;
 
@@ -184,42 +268,64 @@ void UHeroEquipment_Familiar_CoreHealer::NotifyEquipment_PawnAttacked()
 
 // Function CDT4.HeroEquipment_Familiar_CoreHealer.GetDesiredSphereRotationalPlacement
 // (Defined, Public, HasOutParms)
+// Parameters:
+// class USkeletalMeshComponent*  myMeshComp                     (Parm, EditInline)
+// class ADunDefPlayer*           myPlayer                       (Parm)
+// unsigned char                  HasTarget                      (Parm, OutParm)
+// struct FRotator                ReturnValue                    (Parm, OutParm, ReturnParm)
 
-void UHeroEquipment_Familiar_CoreHealer::GetDesiredSphereRotationalPlacement()
+struct FRotator UHeroEquipment_Familiar_CoreHealer::GetDesiredSphereRotationalPlacement(class USkeletalMeshComponent* myMeshComp, class ADunDefPlayer* myPlayer, unsigned char* HasTarget)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function CDT4.HeroEquipment_Familiar_CoreHealer.GetDesiredSphereRotationalPlacement");
 
 	UHeroEquipment_Familiar_CoreHealer_GetDesiredSphereRotationalPlacement_Params params;
+	params.myMeshComp = myMeshComp;
+	params.myPlayer = myPlayer;
 
 	auto flags = fn->FunctionFlags;
 
 	UObject::ProcessEvent(fn, &params);
 
 	fn->FunctionFlags = flags;
+
+	if (HasTarget != nullptr)
+		*HasTarget = params.HasTarget;
+
+	return params.ReturnValue;
 }
 
 
 // Function CDT4.HeroEquipment_Familiar_CoreHealer.GetDesiredDirection
 // (Defined, Public)
+// Parameters:
+// class USkeletalMeshComponent*  myMeshComp                     (Parm, EditInline)
+// class ADunDefPlayer*           myPlayer                       (Parm)
+// struct FRotator                ReturnValue                    (Parm, OutParm, ReturnParm)
 
-void UHeroEquipment_Familiar_CoreHealer::GetDesiredDirection()
+struct FRotator UHeroEquipment_Familiar_CoreHealer::GetDesiredDirection(class USkeletalMeshComponent* myMeshComp, class ADunDefPlayer* myPlayer)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function CDT4.HeroEquipment_Familiar_CoreHealer.GetDesiredDirection");
 
 	UHeroEquipment_Familiar_CoreHealer_GetDesiredDirection_Params params;
+	params.myMeshComp = myMeshComp;
+	params.myPlayer = myPlayer;
 
 	auto flags = fn->FunctionFlags;
 
 	UObject::ProcessEvent(fn, &params);
 
 	fn->FunctionFlags = flags;
+
+	return params.ReturnValue;
 }
 
 
 // Function CDT4.HeroEquipment_Familiar_CoreHealer.GetAttackInterval
 // (Defined, Simulated, Public)
+// Parameters:
+// float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
-void UHeroEquipment_Familiar_CoreHealer::GetAttackInterval()
+float UHeroEquipment_Familiar_CoreHealer::GetAttackInterval()
 {
 	static auto fn = UObject::FindObject<UFunction>("Function CDT4.HeroEquipment_Familiar_CoreHealer.GetAttackInterval");
 
@@ -230,13 +336,17 @@ void UHeroEquipment_Familiar_CoreHealer::GetAttackInterval()
 	UObject::ProcessEvent(fn, &params);
 
 	fn->FunctionFlags = flags;
+
+	return params.ReturnValue;
 }
 
 
 // Function CDT4.HeroEquipment_Familiar_CoreHealer.GetHealAmount
 // (Defined, Simulated, Public)
+// Parameters:
+// float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
-void UHeroEquipment_Familiar_CoreHealer::GetHealAmount()
+float UHeroEquipment_Familiar_CoreHealer::GetHealAmount()
 {
 	static auto fn = UObject::FindObject<UFunction>("Function CDT4.HeroEquipment_Familiar_CoreHealer.GetHealAmount");
 
@@ -247,13 +357,17 @@ void UHeroEquipment_Familiar_CoreHealer::GetHealAmount()
 	UObject::ProcessEvent(fn, &params);
 
 	fn->FunctionFlags = flags;
+
+	return params.ReturnValue;
 }
 
 
 // Function CDT4.HeroEquipment_Familiar_CoreHealer.GetManaCost
 // (Defined, Simulated, Public)
+// Parameters:
+// float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
-void UHeroEquipment_Familiar_CoreHealer::GetManaCost()
+float UHeroEquipment_Familiar_CoreHealer::GetManaCost()
 {
 	static auto fn = UObject::FindObject<UFunction>("Function CDT4.HeroEquipment_Familiar_CoreHealer.GetManaCost");
 
@@ -264,13 +378,17 @@ void UHeroEquipment_Familiar_CoreHealer::GetManaCost()
 	UObject::ProcessEvent(fn, &params);
 
 	fn->FunctionFlags = flags;
+
+	return params.ReturnValue;
 }
 
 
 // Function CDT4.HeroEquipment_Familiar_CoreHealer.GetHealRangeSq
 // (Defined, Simulated, Public)
+// Parameters:
+// float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
-void UHeroEquipment_Familiar_CoreHealer::GetHealRangeSq()
+float UHeroEquipment_Familiar_CoreHealer::GetHealRangeSq()
 {
 	static auto fn = UObject::FindObject<UFunction>("Function CDT4.HeroEquipment_Familiar_CoreHealer.GetHealRangeSq");
 
@@ -281,34 +399,47 @@ void UHeroEquipment_Familiar_CoreHealer::GetHealRangeSq()
 	UObject::ProcessEvent(fn, &params);
 
 	fn->FunctionFlags = flags;
+
+	return params.ReturnValue;
 }
 
 
 // Function CDT4.HeroEquipment_Familiar_CoreHealer.GetEquipmentStatName
 // (Defined, Public)
+// Parameters:
+// TEnumAsByte<EEquipmentStatType> equipmentStatType              (Parm)
+// struct FString                 ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
 
-void UHeroEquipment_Familiar_CoreHealer::GetEquipmentStatName()
+struct FString UHeroEquipment_Familiar_CoreHealer::GetEquipmentStatName(TEnumAsByte<EEquipmentStatType> equipmentStatType)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function CDT4.HeroEquipment_Familiar_CoreHealer.GetEquipmentStatName");
 
 	UHeroEquipment_Familiar_CoreHealer_GetEquipmentStatName_Params params;
+	params.equipmentStatType = equipmentStatType;
 
 	auto flags = fn->FunctionFlags;
 
 	UObject::ProcessEvent(fn, &params);
 
 	fn->FunctionFlags = flags;
+
+	return params.ReturnValue;
 }
 
 
 // Function CDT4.HeroEquipment_Familiar_CoreHealer.UpdateAI
 // (Defined, Public)
+// Parameters:
+// class ADunDefPlayer*           PlayerOwner                    (Parm)
+// float                          DeltaTime                      (Parm)
 
-void UHeroEquipment_Familiar_CoreHealer::UpdateAI()
+void UHeroEquipment_Familiar_CoreHealer::UpdateAI(class ADunDefPlayer* PlayerOwner, float DeltaTime)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function CDT4.HeroEquipment_Familiar_CoreHealer.UpdateAI");
 
 	UHeroEquipment_Familiar_CoreHealer_UpdateAI_Params params;
+	params.PlayerOwner = PlayerOwner;
+	params.DeltaTime = DeltaTime;
 
 	auto flags = fn->FunctionFlags;
 
@@ -320,12 +451,17 @@ void UHeroEquipment_Familiar_CoreHealer::UpdateAI()
 
 // Function CDT4.HeroEquipment_Familiar_CoreHealer.TickedByPawn
 // (Defined, Public)
+// Parameters:
+// class ADunDefPlayer*           PlayerOwner                    (Parm)
+// float                          DeltaTime                      (Parm)
 
-void UHeroEquipment_Familiar_CoreHealer::TickedByPawn()
+void UHeroEquipment_Familiar_CoreHealer::TickedByPawn(class ADunDefPlayer* PlayerOwner, float DeltaTime)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function CDT4.HeroEquipment_Familiar_CoreHealer.TickedByPawn");
 
 	UHeroEquipment_Familiar_CoreHealer_TickedByPawn_Params params;
+	params.PlayerOwner = PlayerOwner;
+	params.DeltaTime = DeltaTime;
 
 	auto flags = fn->FunctionFlags;
 
@@ -337,12 +473,15 @@ void UHeroEquipment_Familiar_CoreHealer::TickedByPawn()
 
 // Function CDT4.HeroEquipment_Familiar_CoreHealer.UpdateRotation
 // (Defined, Public)
+// Parameters:
+// float                          DeltaTime                      (Parm)
 
-void UHeroEquipment_Familiar_CoreHealer::UpdateRotation()
+void UHeroEquipment_Familiar_CoreHealer::UpdateRotation(float DeltaTime)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function CDT4.HeroEquipment_Familiar_CoreHealer.UpdateRotation");
 
 	UHeroEquipment_Familiar_CoreHealer_UpdateRotation_Params params;
+	params.DeltaTime = DeltaTime;
 
 	auto flags = fn->FunctionFlags;
 
@@ -354,12 +493,15 @@ void UHeroEquipment_Familiar_CoreHealer::UpdateRotation()
 
 // Function CDT4.HeroEquipment_Familiar_CoreHealer.ShutDown
 // (Defined, HasOptionalParms, Public)
+// Parameters:
+// bool                           isDestruction                  (OptionalParm, Parm)
 
-void UHeroEquipment_Familiar_CoreHealer::ShutDown()
+void UHeroEquipment_Familiar_CoreHealer::ShutDown(bool isDestruction)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function CDT4.HeroEquipment_Familiar_CoreHealer.ShutDown");
 
 	UHeroEquipment_Familiar_CoreHealer_ShutDown_Params params;
+	params.isDestruction = isDestruction;
 
 	auto flags = fn->FunctionFlags;
 
@@ -371,12 +513,15 @@ void UHeroEquipment_Familiar_CoreHealer::ShutDown()
 
 // Function CDT4.HeroEquipment_Familiar_CoreHealer.AttachedComponent
 // (Defined, Public)
+// Parameters:
+// class UPrimitiveComponent*     aComp                          (Parm, EditInline)
 
-void UHeroEquipment_Familiar_CoreHealer::AttachedComponent()
+void UHeroEquipment_Familiar_CoreHealer::AttachedComponent(class UPrimitiveComponent* aComp)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function CDT4.HeroEquipment_Familiar_CoreHealer.AttachedComponent");
 
 	UHeroEquipment_Familiar_CoreHealer_AttachedComponent_Params params;
+	params.aComp = aComp;
 
 	auto flags = fn->FunctionFlags;
 
@@ -388,8 +533,10 @@ void UHeroEquipment_Familiar_CoreHealer::AttachedComponent()
 
 // Function CDT4.HeroEquipment_Familiar_MiniQueen.GetBestTarget
 // (Defined, Public, HasDefaults)
+// Parameters:
+// TScriptInterface<class UDunDefTargetableInterface> ReturnValue                    (Parm, OutParm, ReturnParm)
 
-void UHeroEquipment_Familiar_MiniQueen::GetBestTarget()
+TScriptInterface<class UDunDefTargetableInterface> UHeroEquipment_Familiar_MiniQueen::GetBestTarget()
 {
 	static auto fn = UObject::FindObject<UFunction>("Function CDT4.HeroEquipment_Familiar_MiniQueen.GetBestTarget");
 
@@ -400,6 +547,8 @@ void UHeroEquipment_Familiar_MiniQueen::GetBestTarget()
 	UObject::ProcessEvent(fn, &params);
 
 	fn->FunctionFlags = flags;
+
+	return params.ReturnValue;
 }
 
 
@@ -439,29 +588,40 @@ void UHeroEquipment_Familiar_MiniQueen::BeginMeleeAttack()
 
 // Function CDT4.HeroEquipment_Familiar_MiniQueen.CanWebTarget
 // (Defined, Public)
+// Parameters:
+// TScriptInterface<class UDunDefTargetableInterface> Target                         (Parm)
+// bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
-void UHeroEquipment_Familiar_MiniQueen::CanWebTarget()
+bool UHeroEquipment_Familiar_MiniQueen::CanWebTarget(const TScriptInterface<class UDunDefTargetableInterface>& Target)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function CDT4.HeroEquipment_Familiar_MiniQueen.CanWebTarget");
 
 	UHeroEquipment_Familiar_MiniQueen_CanWebTarget_Params params;
+	params.Target = Target;
 
 	auto flags = fn->FunctionFlags;
 
 	UObject::ProcessEvent(fn, &params);
 
 	fn->FunctionFlags = flags;
+
+	return params.ReturnValue;
 }
 
 
 // Function CDT4.HeroEquipment_Familiar_MiniQueen.UpdateAI
 // (Defined, Public)
+// Parameters:
+// class ADunDefPlayer*           PlayerOwner                    (Parm)
+// float                          DeltaTime                      (Parm)
 
-void UHeroEquipment_Familiar_MiniQueen::UpdateAI()
+void UHeroEquipment_Familiar_MiniQueen::UpdateAI(class ADunDefPlayer* PlayerOwner, float DeltaTime)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function CDT4.HeroEquipment_Familiar_MiniQueen.UpdateAI");
 
 	UHeroEquipment_Familiar_MiniQueen_UpdateAI_Params params;
+	params.PlayerOwner = PlayerOwner;
+	params.DeltaTime = DeltaTime;
 
 	auto flags = fn->FunctionFlags;
 

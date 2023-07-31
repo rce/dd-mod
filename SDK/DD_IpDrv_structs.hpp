@@ -225,25 +225,25 @@ struct FIpAddr
 // 0x0018
 struct FEventUploadConfig
 {
-	TEnumAsByte<EEventUploadType>                      UploadType;                                               // 0x0000(0x0001)
+	TEnumAsByte<EEventUploadType>                      UploadType;                                               // 0x0000(0x0001) (Const)
 	unsigned char                                      UnknownData00[0x3];                                       // 0x0001(0x0003) MISSED OFFSET
-	struct FString                                     UploadUrl;                                                // 0x0004(0x000C)
-	float                                              TimeOut;                                                  // 0x0010(0x0004)
-	unsigned long                                      bUseCompression : 1;                                      // 0x0014(0x0004)
+	struct FString                                     UploadUrl;                                                // 0x0004(0x000C) (Const, NeedCtorLink)
+	float                                              TimeOut;                                                  // 0x0010(0x0004) (Const)
+	unsigned long                                      bUseCompression : 1;                                      // 0x0014(0x0004) (Const)
 };
 
 // ScriptStruct IpDrv.OnlineNewsInterfaceMcp.NewsCacheEntry
 // 0x0028
 struct FNewsCacheEntry
 {
-	struct FString                                     NewsUrl;                                                  // 0x0000(0x000C)
+	struct FString                                     NewsUrl;                                                  // 0x0000(0x000C) (Const, NeedCtorLink)
 	TEnumAsByte<EOnlineEnumerationReadState>           ReadState;                                                // 0x000C(0x0001)
-	TEnumAsByte<EOnlineNewsType>                       NewsType;                                                 // 0x000D(0x0001)
+	TEnumAsByte<EOnlineNewsType>                       NewsType;                                                 // 0x000D(0x0001) (Const)
 	unsigned char                                      UnknownData00[0x2];                                       // 0x000E(0x0002) MISSED OFFSET
-	struct FString                                     NewsItem;                                                 // 0x0010(0x000C)
-	float                                              TimeOut;                                                  // 0x001C(0x0004)
-	unsigned long                                      bIsUnicode : 1;                                           // 0x0020(0x0004)
-	struct FPointer                                    HttpDownloader;                                           // 0x0024(0x0004)
+	struct FString                                     NewsItem;                                                 // 0x0010(0x000C) (NeedCtorLink)
+	float                                              TimeOut;                                                  // 0x001C(0x0004) (Const)
+	unsigned long                                      bIsUnicode : 1;                                           // 0x0020(0x0004) (Const)
+	struct FPointer                                    HttpDownloader;                                           // 0x0024(0x0004) (Const, Native)
 };
 
 // ScriptStruct IpDrv.MeshBeacon.PlayerMember
@@ -273,7 +273,7 @@ struct FClientConnectionRequest
 	unsigned char                                      UnknownData00[0x3];                                       // 0x0009(0x0003) MISSED OFFSET
 	unsigned long                                      bCanHostVs : 1;                                           // 0x000C(0x0004)
 	float                                              GoodHostRatio;                                            // 0x0010(0x0004)
-	TArray<struct FConnectionBandwidthStats>           BandwidthHistory;                                         // 0x0014(0x000C)
+	TArray<struct FConnectionBandwidthStats>           BandwidthHistory;                                         // 0x0014(0x000C) (NeedCtorLink)
 	int                                                MinutesSinceLastTest;                                     // 0x0020(0x0004)
 };
 
@@ -310,14 +310,14 @@ struct FClientMeshBeaconConnection
 {
 	struct FUniqueNetId                                PlayerNetId;                                              // 0x0000(0x0008)
 	float                                              ElapsedHeartbeatTime;                                     // 0x0008(0x0004)
-	struct FPointer                                    Socket;                                                   // 0x000C(0x0004)
+	struct FPointer                                    Socket;                                                   // 0x000C(0x0004) (Native, Transient)
 	unsigned long                                      bConnectionAccepted : 1;                                  // 0x0010(0x0004)
 	struct FClientConnectionBandwidthTestData          BandwidthTest;                                            // 0x0014(0x0028)
 	TEnumAsByte<ENATType>                              NatType;                                                  // 0x003C(0x0001)
 	unsigned char                                      UnknownData00[0x3];                                       // 0x003D(0x0003) MISSED OFFSET
 	unsigned long                                      bCanHostVs : 1;                                           // 0x0040(0x0004)
 	float                                              GoodHostRatio;                                            // 0x0044(0x0004)
-	TArray<struct FConnectionBandwidthStats>           BandwidthHistory;                                         // 0x0048(0x000C)
+	TArray<struct FConnectionBandwidthStats>           BandwidthHistory;                                         // 0x0048(0x000C) (NeedCtorLink)
 	int                                                MinutesSinceLastTest;                                     // 0x0054(0x0004)
 };
 
@@ -339,7 +339,7 @@ struct FPartyReservation
 {
 	int                                                TeamNum;                                                  // 0x0000(0x0004)
 	struct FUniqueNetId                                PartyLeader;                                              // 0x0004(0x0008)
-	TArray<struct FPlayerReservation>                  PartyMembers;                                             // 0x000C(0x000C)
+	TArray<struct FPlayerReservation>                  PartyMembers;                                             // 0x000C(0x000C) (NeedCtorLink)
 };
 
 // ScriptStruct IpDrv.PartyBeaconHost.ClientBeaconConnection
@@ -348,7 +348,7 @@ struct FClientBeaconConnection
 {
 	struct FUniqueNetId                                PartyLeader;                                              // 0x0000(0x0008)
 	float                                              ElapsedHeartbeatTime;                                     // 0x0008(0x0004)
-	struct FPointer                                    Socket;                                                   // 0x000C(0x0004)
+	struct FPointer                                    Socket;                                                   // 0x000C(0x0004) (Native, Transient)
 };
 
 }
