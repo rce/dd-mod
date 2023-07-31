@@ -1,0 +1,1411 @@
+#pragma once
+
+// Dungeon Defenders (9.22) SDK
+
+#ifdef _MSC_VER
+	#pragma pack(push, 0x4)
+#endif
+
+#include "../SDK.hpp"
+
+namespace Classes
+{
+//---------------------------------------------------------------------------
+//Parameters
+//---------------------------------------------------------------------------
+
+// Function OnlineSubsystemSteamworks.OnlineGameInterfaceSteamworks.CreateOnlineGameFailureID
+struct UOnlineGameInterfaceSteamworks_CreateOnlineGameFailureID_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineGameInterfaceSteamworks.GetResolvedConnectString
+struct UOnlineGameInterfaceSteamworks_GetResolvedConnectString_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineGameInterfaceSteamworks.QueryNonAdvertisedData
+struct UOnlineGameInterfaceSteamworks_QueryNonAdvertisedData_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineGameInterfaceSteamworks.ClearUnregisterPlayerCompleteDelegate
+struct UOnlineGameInterfaceSteamworks_ClearUnregisterPlayerCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineGameInterfaceSteamworks.AddUnregisterPlayerCompleteDelegate
+struct UOnlineGameInterfaceSteamworks_AddUnregisterPlayerCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineGameInterfaceSteamworks.OnUnregisterPlayerComplete
+struct UOnlineGameInterfaceSteamworks_OnUnregisterPlayerComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineGameInterfaceSteamworks.UnregisterPlayer
+struct UOnlineGameInterfaceSteamworks_UnregisterPlayer_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineGameInterfaceSteamworks.ClearRegisterPlayerCompleteDelegate
+struct UOnlineGameInterfaceSteamworks_ClearRegisterPlayerCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineGameInterfaceSteamworks.AddRegisterPlayerCompleteDelegate
+struct UOnlineGameInterfaceSteamworks_AddRegisterPlayerCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineGameInterfaceSteamworks.OnRegisterPlayerComplete
+struct UOnlineGameInterfaceSteamworks_OnRegisterPlayerComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineGameInterfaceSteamworks.RegisterPlayer
+struct UOnlineGameInterfaceSteamworks_RegisterPlayer_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineGameInterfaceSteamworks.AcceptGameInvite
+struct UOnlineGameInterfaceSteamworks_AcceptGameInvite_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineGameInterfaceSteamworks.OnGameInviteAccepted
+struct UOnlineGameInterfaceSteamworks_OnGameInviteAccepted_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineGameInterfaceSteamworks.ClearGameInviteAcceptedDelegate
+struct UOnlineGameInterfaceSteamworks_ClearGameInviteAcceptedDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineGameInterfaceSteamworks.AddGameInviteAcceptedDelegate
+struct UOnlineGameInterfaceSteamworks_AddGameInviteAcceptedDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineGameInterfaceSteamworks.UpdateOnlineGame
+struct UOnlineGameInterfaceSteamworks_UpdateOnlineGame_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearQuerySubscribedDownloadsComplete
+struct UOnlineSubsystemSteamworks_ClearQuerySubscribedDownloadsComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddQuerySubscribedDownloadsComplete
+struct UOnlineSubsystemSteamworks_AddQuerySubscribedDownloadsComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnQuerySubscribedDownloadsComplete
+struct UOnlineSubsystemSteamworks_OnQuerySubscribedDownloadsComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.SubscribedDownloadsInformation
+struct UOnlineSubsystemSteamworks_SubscribedDownloadsInformation_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.QuerySubscribedDownloads
+struct UOnlineSubsystemSteamworks_QuerySubscribedDownloads_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.GetAvailableDownloadCounts
+struct UOnlineSubsystemSteamworks_GetAvailableDownloadCounts_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearQueryAvailableDownloadsComplete
+struct UOnlineSubsystemSteamworks_ClearQueryAvailableDownloadsComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddQueryAvailableDownloadsComplete
+struct UOnlineSubsystemSteamworks_AddQueryAvailableDownloadsComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnQueryAvailableDownloadsComplete
+struct UOnlineSubsystemSteamworks_OnQueryAvailableDownloadsComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.QueryAvailableDownloads
+struct UOnlineSubsystemSteamworks_QueryAvailableDownloads_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.GetContentList
+struct UOnlineSubsystemSteamworks_GetContentList_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ReadContentList
+struct UOnlineSubsystemSteamworks_ReadContentList_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearReadContentComplete
+struct UOnlineSubsystemSteamworks_ClearReadContentComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddReadContentComplete
+struct UOnlineSubsystemSteamworks_AddReadContentComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnReadContentComplete
+struct UOnlineSubsystemSteamworks_OnReadContentComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearContentChangeDelegate
+struct UOnlineSubsystemSteamworks_ClearContentChangeDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddContentChangeDelegate
+struct UOnlineSubsystemSteamworks_AddContentChangeDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnContentChange
+struct UOnlineSubsystemSteamworks_OnContentChange_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.Exit
+struct UOnlineSubsystemSteamworks_Exit_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.VerifyStrings
+struct UOnlineSubsystemSteamworks_VerifyStrings_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearStringVerificationDelegate
+struct UOnlineSubsystemSteamworks_ClearStringVerificationDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddStringVerificationDelegate
+struct UOnlineSubsystemSteamworks_AddStringVerificationDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnStringVerificationComplete
+struct UOnlineSubsystemSteamworks_OnStringVerificationComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearDLCStorageDeviceRemovedDelegate
+struct UOnlineSubsystemSteamworks_ClearDLCStorageDeviceRemovedDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddDLCStorageDeviceRemovedDelegate
+struct UOnlineSubsystemSteamworks_AddDLCStorageDeviceRemovedDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnDLCStorageDeviceRemoved
+struct UOnlineSubsystemSteamworks_OnDLCStorageDeviceRemoved_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearAllFlushOnlineStatsCompleteDelegates
+struct UOnlineSubsystemSteamworks_ClearAllFlushOnlineStatsCompleteDelegates_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearDeviceFoundDelegate
+struct UOnlineSubsystemSteamworks_ClearDeviceFoundDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddDeviceFoundDelegate
+struct UOnlineSubsystemSteamworks_AddDeviceFoundDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnDeviceFound
+struct UOnlineSubsystemSteamworks_OnDeviceFound_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.HasBeenRegistered
+struct UOnlineSubsystemSteamworks_HasBeenRegistered_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.SetCaptureVolume
+struct UOnlineSubsystemSteamworks_SetCaptureVolume_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.SetPlaybackVolume
+struct UOnlineSubsystemSteamworks_SetPlaybackVolume_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.CancelLogin
+struct UOnlineSubsystemSteamworks_CancelLogin_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ManageInvites
+struct UOnlineSubsystemSteamworks_ManageInvites_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.FindUniqueNetIdForPlayer
+struct UOnlineSubsystemSteamworks_FindUniqueNetIdForPlayer_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearFindUniqueNetIdForPlayerDelegate
+struct UOnlineSubsystemSteamworks_ClearFindUniqueNetIdForPlayerDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddFindUniqueNetIdForPlayerDelegate
+struct UOnlineSubsystemSteamworks_AddFindUniqueNetIdForPlayerDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnFindUniqueNetIdForPlayerComplete
+struct UOnlineSubsystemSteamworks_OnFindUniqueNetIdForPlayerComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddToPlayersMetList
+struct UOnlineSubsystemSteamworks_AddToPlayersMetList_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.CreateLeaderboard
+struct UOnlineSubsystemSteamworks_CreateLeaderboard_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearGetNumberOfCurrentPlayersCompleteDelegate
+struct UOnlineSubsystemSteamworks_ClearGetNumberOfCurrentPlayersCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddGetNumberOfCurrentPlayersCompleteDelegate
+struct UOnlineSubsystemSteamworks_AddGetNumberOfCurrentPlayersCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnGetNumberOfCurrentPlayersComplete
+struct UOnlineSubsystemSteamworks_OnGetNumberOfCurrentPlayersComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.GetNumberOfCurrentPlayers
+struct UOnlineSubsystemSteamworks_GetNumberOfCurrentPlayers_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ReadOnlineAvatar
+struct UOnlineSubsystemSteamworks_ReadOnlineAvatar_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnReadOnlineAvatarComplete
+struct UOnlineSubsystemSteamworks_OnReadOnlineAvatarComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ShowCustomPlayersUI
+struct UOnlineSubsystemSteamworks_ShowCustomPlayersUI_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.GetAchievements
+struct UOnlineSubsystemSteamworks_GetAchievements_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearReadAchievementsCompleteDelegate
+struct UOnlineSubsystemSteamworks_ClearReadAchievementsCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddReadAchievementsCompleteDelegate
+struct UOnlineSubsystemSteamworks_AddReadAchievementsCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnReadAchievementsComplete
+struct UOnlineSubsystemSteamworks_OnReadAchievementsComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ReadAchievements
+struct UOnlineSubsystemSteamworks_ReadAchievements_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ShowPlayersUI
+struct UOnlineSubsystemSteamworks_ShowPlayersUI_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ShowFriendsInviteUI
+struct UOnlineSubsystemSteamworks_ShowFriendsInviteUI_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ShowFriendsUI
+struct UOnlineSubsystemSteamworks_ShowFriendsUI_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearProfileDataChangedDelegate
+struct UOnlineSubsystemSteamworks_ClearProfileDataChangedDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddProfileDataChangedDelegate
+struct UOnlineSubsystemSteamworks_AddProfileDataChangedDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnProfileDataChanged
+struct UOnlineSubsystemSteamworks_OnProfileDataChanged_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.UnlockGamerPicture
+struct UOnlineSubsystemSteamworks_UnlockGamerPicture_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearUnlockAchievementCompleteDelegate
+struct UOnlineSubsystemSteamworks_ClearUnlockAchievementCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddUnlockAchievementCompleteDelegate
+struct UOnlineSubsystemSteamworks_AddUnlockAchievementCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnUnlockAchievementComplete
+struct UOnlineSubsystemSteamworks_OnUnlockAchievementComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.UnlockAchievement
+struct UOnlineSubsystemSteamworks_UnlockAchievement_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.IsDeviceValid
+struct UOnlineSubsystemSteamworks_IsDeviceValid_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.GetDeviceSelectionResults
+struct UOnlineSubsystemSteamworks_GetDeviceSelectionResults_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearDeviceSelectionDoneDelegate
+struct UOnlineSubsystemSteamworks_ClearDeviceSelectionDoneDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddDeviceSelectionDoneDelegate
+struct UOnlineSubsystemSteamworks_AddDeviceSelectionDoneDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnDeviceSelectionComplete
+struct UOnlineSubsystemSteamworks_OnDeviceSelectionComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ShowDeviceSelectionUI
+struct UOnlineSubsystemSteamworks_ShowDeviceSelectionUI_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ShowMembershipMarketplaceUI
+struct UOnlineSubsystemSteamworks_ShowMembershipMarketplaceUI_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ShowContentMarketplaceUI
+struct UOnlineSubsystemSteamworks_ShowContentMarketplaceUI_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ShowInviteUI
+struct UOnlineSubsystemSteamworks_ShowInviteUI_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ShowAchievementsUI
+struct UOnlineSubsystemSteamworks_ShowAchievementsUI_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ShowMessagesUI
+struct UOnlineSubsystemSteamworks_ShowMessagesUI_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ShowGamerCardUI
+struct UOnlineSubsystemSteamworks_ShowGamerCardUI_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ShowFeedbackUI
+struct UOnlineSubsystemSteamworks_ShowFeedbackUI_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.DeleteMessage
+struct UOnlineSubsystemSteamworks_DeleteMessage_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.UnmuteAll
+struct UOnlineSubsystemSteamworks_UnmuteAll_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.MuteAll
+struct UOnlineSubsystemSteamworks_MuteAll_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.RegisterStatGuid
+struct UOnlineSubsystemSteamworks_RegisterStatGuid_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.GetClientStatGuid
+struct UOnlineSubsystemSteamworks_GetClientStatGuid_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearRegisterHostStatGuidCompleteDelegateDelegate
+struct UOnlineSubsystemSteamworks_ClearRegisterHostStatGuidCompleteDelegateDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddRegisterHostStatGuidCompleteDelegate
+struct UOnlineSubsystemSteamworks_AddRegisterHostStatGuidCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnRegisterHostStatGuidComplete
+struct UOnlineSubsystemSteamworks_OnRegisterHostStatGuidComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.RegisterHostStatGuid
+struct UOnlineSubsystemSteamworks_RegisterHostStatGuid_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.GetHostStatGuid
+struct UOnlineSubsystemSteamworks_GetHostStatGuid_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearFriendMessageReceivedDelegate
+struct UOnlineSubsystemSteamworks_ClearFriendMessageReceivedDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddFriendMessageReceivedDelegate
+struct UOnlineSubsystemSteamworks_AddFriendMessageReceivedDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnFriendMessageReceived
+struct UOnlineSubsystemSteamworks_OnFriendMessageReceived_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.GetFriendMessages
+struct UOnlineSubsystemSteamworks_GetFriendMessages_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearJoinFriendGameCompleteDelegate
+struct UOnlineSubsystemSteamworks_ClearJoinFriendGameCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddJoinFriendGameCompleteDelegate
+struct UOnlineSubsystemSteamworks_AddJoinFriendGameCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnJoinFriendGameComplete
+struct UOnlineSubsystemSteamworks_OnJoinFriendGameComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.JoinFriendGame
+struct UOnlineSubsystemSteamworks_JoinFriendGame_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearReceivedGameInviteDelegate
+struct UOnlineSubsystemSteamworks_ClearReceivedGameInviteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddReceivedGameInviteDelegate
+struct UOnlineSubsystemSteamworks_AddReceivedGameInviteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnReceivedGameInvite
+struct UOnlineSubsystemSteamworks_OnReceivedGameInvite_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.SendGameInviteToFriends
+struct UOnlineSubsystemSteamworks_SendGameInviteToFriends_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.SendGameInviteToFriend
+struct UOnlineSubsystemSteamworks_SendGameInviteToFriend_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.SendMessageToFriend
+struct UOnlineSubsystemSteamworks_SendMessageToFriend_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearFriendInviteReceivedDelegate
+struct UOnlineSubsystemSteamworks_ClearFriendInviteReceivedDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddFriendInviteReceivedDelegate
+struct UOnlineSubsystemSteamworks_AddFriendInviteReceivedDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnFriendInviteReceived
+struct UOnlineSubsystemSteamworks_OnFriendInviteReceived_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.DenyFriendInvite
+struct UOnlineSubsystemSteamworks_DenyFriendInvite_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AcceptFriendInvite
+struct UOnlineSubsystemSteamworks_AcceptFriendInvite_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.RemoveFriend
+struct UOnlineSubsystemSteamworks_RemoveFriend_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearAddFriendByNameCompleteDelegate
+struct UOnlineSubsystemSteamworks_ClearAddFriendByNameCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddAddFriendByNameCompleteDelegate
+struct UOnlineSubsystemSteamworks_AddAddFriendByNameCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnAddFriendByNameComplete
+struct UOnlineSubsystemSteamworks_OnAddFriendByNameComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddFriendByName
+struct UOnlineSubsystemSteamworks_AddFriendByName_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddFriend
+struct UOnlineSubsystemSteamworks_AddFriend_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.GetKeyboardInputResults
+struct UOnlineSubsystemSteamworks_GetKeyboardInputResults_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearKeyboardInputDoneDelegate
+struct UOnlineSubsystemSteamworks_ClearKeyboardInputDoneDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddKeyboardInputDoneDelegate
+struct UOnlineSubsystemSteamworks_AddKeyboardInputDoneDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnKeyboardInputComplete
+struct UOnlineSubsystemSteamworks_OnKeyboardInputComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ShowKeyboardUI
+struct UOnlineSubsystemSteamworks_ShowKeyboardUI_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.SetOnlineStatus
+struct UOnlineSubsystemSteamworks_SetOnlineStatus_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.GetLocalAccountNames
+struct UOnlineSubsystemSteamworks_GetLocalAccountNames_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.DeleteLocalAccount
+struct UOnlineSubsystemSteamworks_DeleteLocalAccount_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.RenameLocalAccount
+struct UOnlineSubsystemSteamworks_RenameLocalAccount_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.CreateLocalAccount
+struct UOnlineSubsystemSteamworks_CreateLocalAccount_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearCreateOnlineAccountCompletedDelegate
+struct UOnlineSubsystemSteamworks_ClearCreateOnlineAccountCompletedDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddCreateOnlineAccountCompletedDelegate
+struct UOnlineSubsystemSteamworks_AddCreateOnlineAccountCompletedDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnCreateOnlineAccountCompleted
+struct UOnlineSubsystemSteamworks_OnCreateOnlineAccountCompleted_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.CreateOnlineAccount
+struct UOnlineSubsystemSteamworks_CreateOnlineAccount_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.GetTitleFileState
+struct UOnlineSubsystemSteamworks_GetTitleFileState_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.GetTitleFileContents
+struct UOnlineSubsystemSteamworks_GetTitleFileContents_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearReadTitleFileCompleteDelegate
+struct UOnlineSubsystemSteamworks_ClearReadTitleFileCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddReadTitleFileCompleteDelegate
+struct UOnlineSubsystemSteamworks_AddReadTitleFileCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ReadTitleFile
+struct UOnlineSubsystemSteamworks_ReadTitleFile_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnReadTitleFileComplete
+struct UOnlineSubsystemSteamworks_OnReadTitleFileComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearStorageDeviceChangeDelegate
+struct UOnlineSubsystemSteamworks_ClearStorageDeviceChangeDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddStorageDeviceChangeDelegate
+struct UOnlineSubsystemSteamworks_AddStorageDeviceChangeDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnStorageDeviceChange
+struct UOnlineSubsystemSteamworks_OnStorageDeviceChange_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.GetNATType
+struct UOnlineSubsystemSteamworks_GetNATType_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearConnectionStatusChangeDelegate
+struct UOnlineSubsystemSteamworks_ClearConnectionStatusChangeDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddConnectionStatusChangeDelegate
+struct UOnlineSubsystemSteamworks_AddConnectionStatusChangeDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnConnectionStatusChange
+struct UOnlineSubsystemSteamworks_OnConnectionStatusChange_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.IsControllerConnected
+struct UOnlineSubsystemSteamworks_IsControllerConnected_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearControllerChangeDelegate
+struct UOnlineSubsystemSteamworks_ClearControllerChangeDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddControllerChangeDelegate
+struct UOnlineSubsystemSteamworks_AddControllerChangeDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnControllerChange
+struct UOnlineSubsystemSteamworks_OnControllerChange_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.SetNetworkNotificationPosition
+struct UOnlineSubsystemSteamworks_SetNetworkNotificationPosition_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.GetNetworkNotificationPosition
+struct UOnlineSubsystemSteamworks_GetNetworkNotificationPosition_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearExternalUIChangeDelegate
+struct UOnlineSubsystemSteamworks_ClearExternalUIChangeDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddExternalUIChangeDelegate
+struct UOnlineSubsystemSteamworks_AddExternalUIChangeDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnExternalUIChange
+struct UOnlineSubsystemSteamworks_OnExternalUIChange_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearLinkStatusChangeDelegate
+struct UOnlineSubsystemSteamworks_ClearLinkStatusChangeDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddLinkStatusChangeDelegate
+struct UOnlineSubsystemSteamworks_AddLinkStatusChangeDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnLinkStatusChange
+struct UOnlineSubsystemSteamworks_OnLinkStatusChange_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.HasLinkConnection
+struct UOnlineSubsystemSteamworks_HasLinkConnection_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.GetPlayerUniqueNetIdFromIndex
+struct UOnlineSubsystemSteamworks_GetPlayerUniqueNetIdFromIndex_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.GetPlayerNicknameFromIndex
+struct UOnlineSubsystemSteamworks_GetPlayerNicknameFromIndex_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.WriteOnlinePlayerScores
+struct UOnlineSubsystemSteamworks_WriteOnlinePlayerScores_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearFlushOnlineStatsCompleteDelegate
+struct UOnlineSubsystemSteamworks_ClearFlushOnlineStatsCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddFlushOnlineStatsCompleteDelegate
+struct UOnlineSubsystemSteamworks_AddFlushOnlineStatsCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnFlushOnlineStatsComplete
+struct UOnlineSubsystemSteamworks_OnFlushOnlineStatsComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.FlushOnlineStats
+struct UOnlineSubsystemSteamworks_FlushOnlineStats_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.WriteOnlineStats
+struct UOnlineSubsystemSteamworks_WriteOnlineStats_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.FreeStats
+struct UOnlineSubsystemSteamworks_FreeStats_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearReadOnlineStatsCompleteDelegate
+struct UOnlineSubsystemSteamworks_ClearReadOnlineStatsCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddReadOnlineStatsCompleteDelegate
+struct UOnlineSubsystemSteamworks_AddReadOnlineStatsCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnReadOnlineStatsComplete
+struct UOnlineSubsystemSteamworks_OnReadOnlineStatsComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ReadOnlineStatsByRankAroundPlayer
+struct UOnlineSubsystemSteamworks_ReadOnlineStatsByRankAroundPlayer_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ReadOnlineStatsByRank
+struct UOnlineSubsystemSteamworks_ReadOnlineStatsByRank_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ReadOnlineStatsForFriends
+struct UOnlineSubsystemSteamworks_ReadOnlineStatsForFriends_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ReadOnlineStats
+struct UOnlineSubsystemSteamworks_ReadOnlineStats_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.SetSpeechRecognitionObject
+struct UOnlineSubsystemSteamworks_SetSpeechRecognitionObject_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.SelectVocabulary
+struct UOnlineSubsystemSteamworks_SelectVocabulary_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearRecognitionCompleteDelegate
+struct UOnlineSubsystemSteamworks_ClearRecognitionCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddRecognitionCompleteDelegate
+struct UOnlineSubsystemSteamworks_AddRecognitionCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnRecognitionComplete
+struct UOnlineSubsystemSteamworks_OnRecognitionComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.GetRecognitionResults
+struct UOnlineSubsystemSteamworks_GetRecognitionResults_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.StopSpeechRecognition
+struct UOnlineSubsystemSteamworks_StopSpeechRecognition_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.StartSpeechRecognition
+struct UOnlineSubsystemSteamworks_StartSpeechRecognition_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.StopNetworkedVoice
+struct UOnlineSubsystemSteamworks_StopNetworkedVoice_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.StartNetworkedVoice
+struct UOnlineSubsystemSteamworks_StartNetworkedVoice_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearPlayerTalkingDelegates
+struct UOnlineSubsystemSteamworks_ClearPlayerTalkingDelegates_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearPlayerStoppedTalkingDelegate
+struct UOnlineSubsystemSteamworks_ClearPlayerStoppedTalkingDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearPlayerStartedTalkingDelegate
+struct UOnlineSubsystemSteamworks_ClearPlayerStartedTalkingDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddPlayerStoppedTalkingDelegate
+struct UOnlineSubsystemSteamworks_AddPlayerStoppedTalkingDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddPlayerStartedTalkingDelegate
+struct UOnlineSubsystemSteamworks_AddPlayerStartedTalkingDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnPlayerStopTalking
+struct UOnlineSubsystemSteamworks_OnPlayerStopTalking_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnPlayerBeginTalking
+struct UOnlineSubsystemSteamworks_OnPlayerBeginTalking_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.UnmuteRemoteTalker
+struct UOnlineSubsystemSteamworks_UnmuteRemoteTalker_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.MuteRemoteTalker
+struct UOnlineSubsystemSteamworks_MuteRemoteTalker_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.SetRemoteTalkerPriority
+struct UOnlineSubsystemSteamworks_SetRemoteTalkerPriority_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.IsHeadsetPresent
+struct UOnlineSubsystemSteamworks_IsHeadsetPresent_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.IsRemotePlayerTalking
+struct UOnlineSubsystemSteamworks_IsRemotePlayerTalking_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.IsLocalPlayerTalking
+struct UOnlineSubsystemSteamworks_IsLocalPlayerTalking_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.UnregisterRemoteTalker
+struct UOnlineSubsystemSteamworks_UnregisterRemoteTalker_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.RegisterRemoteTalker
+struct UOnlineSubsystemSteamworks_RegisterRemoteTalker_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.UnregisterLocalTalker
+struct UOnlineSubsystemSteamworks_UnregisterLocalTalker_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.RegisterLocalTalker
+struct UOnlineSubsystemSteamworks_RegisterLocalTalker_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.GetFriendsList
+struct UOnlineSubsystemSteamworks_GetFriendsList_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearReadFriendsCompleteDelegate
+struct UOnlineSubsystemSteamworks_ClearReadFriendsCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddReadFriendsCompleteDelegate
+struct UOnlineSubsystemSteamworks_AddReadFriendsCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnReadFriendsComplete
+struct UOnlineSubsystemSteamworks_OnReadFriendsComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ReadFriendsList
+struct UOnlineSubsystemSteamworks_ReadFriendsList_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearWritePlayerStorageCompleteDelegate
+struct UOnlineSubsystemSteamworks_ClearWritePlayerStorageCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddWritePlayerStorageCompleteDelegate
+struct UOnlineSubsystemSteamworks_AddWritePlayerStorageCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnWritePlayerStorageComplete
+struct UOnlineSubsystemSteamworks_OnWritePlayerStorageComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.WritePlayerStorage
+struct UOnlineSubsystemSteamworks_WritePlayerStorage_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.GetPlayerStorage
+struct UOnlineSubsystemSteamworks_GetPlayerStorage_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearReadPlayerStorageForNetIdCompleteDelegate
+struct UOnlineSubsystemSteamworks_ClearReadPlayerStorageForNetIdCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddReadPlayerStorageForNetIdCompleteDelegate
+struct UOnlineSubsystemSteamworks_AddReadPlayerStorageForNetIdCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnReadPlayerStorageForNetIdComplete
+struct UOnlineSubsystemSteamworks_OnReadPlayerStorageForNetIdComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ReadPlayerStorageForNetId
+struct UOnlineSubsystemSteamworks_ReadPlayerStorageForNetId_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearReadPlayerStorageCompleteDelegate
+struct UOnlineSubsystemSteamworks_ClearReadPlayerStorageCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddReadPlayerStorageCompleteDelegate
+struct UOnlineSubsystemSteamworks_AddReadPlayerStorageCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnReadPlayerStorageComplete
+struct UOnlineSubsystemSteamworks_OnReadPlayerStorageComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ReadPlayerStorage
+struct UOnlineSubsystemSteamworks_ReadPlayerStorage_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearWriteProfileSettingsCompleteDelegate
+struct UOnlineSubsystemSteamworks_ClearWriteProfileSettingsCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddWriteProfileSettingsCompleteDelegate
+struct UOnlineSubsystemSteamworks_AddWriteProfileSettingsCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnWriteProfileSettingsComplete
+struct UOnlineSubsystemSteamworks_OnWriteProfileSettingsComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.WriteProfileSettings
+struct UOnlineSubsystemSteamworks_WriteProfileSettings_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.GetProfileSettings
+struct UOnlineSubsystemSteamworks_GetProfileSettings_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearReadProfileSettingsCompleteDelegate
+struct UOnlineSubsystemSteamworks_ClearReadProfileSettingsCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddReadProfileSettingsCompleteDelegate
+struct UOnlineSubsystemSteamworks_AddReadProfileSettingsCompleteDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnReadProfileSettingsComplete
+struct UOnlineSubsystemSteamworks_OnReadProfileSettingsComplete_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ReadProfileSettings
+struct UOnlineSubsystemSteamworks_ReadProfileSettings_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearFriendsChangeDelegate
+struct UOnlineSubsystemSteamworks_ClearFriendsChangeDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddFriendsChangeDelegate
+struct UOnlineSubsystemSteamworks_AddFriendsChangeDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearMutingChangeDelegate
+struct UOnlineSubsystemSteamworks_ClearMutingChangeDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddMutingChangeDelegate
+struct UOnlineSubsystemSteamworks_AddMutingChangeDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearLoginCancelledDelegate
+struct UOnlineSubsystemSteamworks_ClearLoginCancelledDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddLoginCancelledDelegate
+struct UOnlineSubsystemSteamworks_AddLoginCancelledDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearLoginStatusChangeDelegate
+struct UOnlineSubsystemSteamworks_ClearLoginStatusChangeDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddLoginStatusChangeDelegate
+struct UOnlineSubsystemSteamworks_AddLoginStatusChangeDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnLoginStatusChange
+struct UOnlineSubsystemSteamworks_OnLoginStatusChange_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearLoginChangeDelegate
+struct UOnlineSubsystemSteamworks_ClearLoginChangeDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddLoginChangeDelegate
+struct UOnlineSubsystemSteamworks_AddLoginChangeDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.IsMuted
+struct UOnlineSubsystemSteamworks_IsMuted_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AreAnyFriends
+struct UOnlineSubsystemSteamworks_AreAnyFriends_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.IsFriend
+struct UOnlineSubsystemSteamworks_IsFriend_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.CanShowPresenceInformation
+struct UOnlineSubsystemSteamworks_CanShowPresenceInformation_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.CanViewPlayerProfiles
+struct UOnlineSubsystemSteamworks_CanViewPlayerProfiles_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.CanPurchaseContent
+struct UOnlineSubsystemSteamworks_CanPurchaseContent_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.CanDownloadUserContent
+struct UOnlineSubsystemSteamworks_CanDownloadUserContent_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.CanCommunicate
+struct UOnlineSubsystemSteamworks_CanCommunicate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.CanPlayOnline
+struct UOnlineSubsystemSteamworks_CanPlayOnline_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.GetPlayerNickname
+struct UOnlineSubsystemSteamworks_GetPlayerNickname_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.GetUniquePlayerId
+struct UOnlineSubsystemSteamworks_GetUniquePlayerId_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.IsLocalLogin
+struct UOnlineSubsystemSteamworks_IsLocalLogin_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.IsGuestLogin
+struct UOnlineSubsystemSteamworks_IsGuestLogin_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.GetLoginStatus
+struct UOnlineSubsystemSteamworks_GetLoginStatus_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearLogoutCompletedDelegate
+struct UOnlineSubsystemSteamworks_ClearLogoutCompletedDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddLogoutCompletedDelegate
+struct UOnlineSubsystemSteamworks_AddLogoutCompletedDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnLogoutCompleted
+struct UOnlineSubsystemSteamworks_OnLogoutCompleted_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.Logout
+struct UOnlineSubsystemSteamworks_Logout_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ClearLoginFailedDelegate
+struct UOnlineSubsystemSteamworks_ClearLoginFailedDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AddLoginFailedDelegate
+struct UOnlineSubsystemSteamworks_AddLoginFailedDelegate_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnLoginFailed
+struct UOnlineSubsystemSteamworks_OnLoginFailed_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.AutoLogin
+struct UOnlineSubsystemSteamworks_AutoLogin_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.Login
+struct UOnlineSubsystemSteamworks_Login_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ShowLoginUI
+struct UOnlineSubsystemSteamworks_ShowLoginUI_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnFriendsChange
+struct UOnlineSubsystemSteamworks_OnFriendsChange_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnMutingChange
+struct UOnlineSubsystemSteamworks_OnMutingChange_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnLoginCancelled
+struct UOnlineSubsystemSteamworks_OnLoginCancelled_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.OnLoginChange
+struct UOnlineSubsystemSteamworks_OnLoginChange_Params
+{
+};
+
+// Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.Init
+struct UOnlineSubsystemSteamworks_Init_Params
+{
+};
+
+}
+
+#ifdef _MSC_VER
+	#pragma pack(pop)
+#endif
