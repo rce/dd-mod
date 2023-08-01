@@ -27,9 +27,6 @@
     <ClInclude Include="TrampolineHook.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="InjectionLock.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SDK\DD_Basic.hpp">
       <Filter>SDK</Filter>
     </ClInclude>
@@ -237,9 +234,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InjectionLock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SDK\DD_WinDrv_functions.cpp">

@@ -156,7 +156,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
-    <ClInclude Include="InjectionLock.h" />
     <ClInclude Include="SDK.hpp" />
     <ClInclude Include="SDK\DD_Basic.hpp" />
     <ClInclude Include="SDK\DD_CDT3_classes.hpp" />
@@ -230,7 +229,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="InjectionLock.cpp" />
     <ClCompile Include="SDK\DD_Basic.cpp" />
     <ClCompile Include="SDK\DD_CDT3_functions.cpp" />
     <ClCompile Include="SDK\DD_CDT4_functions.cpp" />
