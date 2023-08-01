@@ -6,8 +6,6 @@
 	#pragma pack(push, 0x4)
 #endif
 
-#include <iostream>
-
 namespace Classes
 {
 //---------------------------------------------------------------------------
@@ -105,15 +103,13 @@ public:
 
 	bool IsA(UClass* cmp) const;
 
-	inline void ProcessEvent(class UFunction* function, void* params)
+	inline void ProcessEvent(class UFunction* pFunction, void* pParms)
 	{
 		using Fn = void(__thiscall *)(UObject*, UFunction*, void*, void*);
 
-		//UObject::ProcessEvent can be found with the sig
-		//8B 46 08 25 00 02 00 00 83 C8 00 0F 84 ?? ?? ?? ?? 83 3D
-		static Fn fn = (Fn)UObject::pProcessEvent;
-
-		return fn(this, function, params, nullptr);
+		const size_t PROCESSEVENT_INDEX = 0x104 / 4;
+		Fn fn = GetVFunction<Fn>(this, PROCESSEVENT_INDEX);
+		return fn(this, pFunction, pParms, nullptr);
 	}
 
 	static UClass* StaticClass()
