@@ -16,7 +16,7 @@ using namespace Classes;
 #include <fstream>
 std::ofstream logfile;
 
-std::vector<std::string> ignoredEvents = {
+std::vector<std::string> ignored_functions = {
 	// ADunDefDroppedEquipment
 	"Function UDKGame.DunDefDroppedEquipment.RotateSkelMesh",
 	"Function UDKGame.DunDefDroppedEquipment.RotateSkelMesh",
@@ -65,36 +65,88 @@ void SafeDelete(T*& ptr)
 }
 
 #include <sstream>
+#include <functional>
+
+template <typename T>
+void IfIsA(UObject* pObject, std::function<void(T*)> callback)
+{
+	if (pObject != nullptr && pObject->IsA(T::StaticClass()))
+	{
+		callback(static_cast<T*>(pObject));
+	}
+}
+
+template <typename T>
+void IteratePawnList(APawn* pPawn, std::function<void(T*)> callback)
+{
+	APawn* pCurrentPawn = pPawn;
+	while (pCurrentPawn != nullptr)
+	{
+		IfIsA<T>(pCurrentPawn, callback);
+		pCurrentPawn = pCurrentPawn->NextPawn;
+	}
+}
+
+template <typename T>
+void IterateActors(AWorldInfo* pWorldInfo, std::function<void(T*)> callback)
+{
+	auto actorLists = std::vector{
+		pWorldInfo->FastOverlapListOne,
+		pWorldInfo->FastOverlapListTwo,
+		pWorldInfo->FastOverlapListThree,
+		pWorldInfo->FastOverlapListFour,
+		pWorldInfo->FastOverlapListFive,
+		pWorldInfo->FastOverlapListSix,
+	};
+	for (auto& actors : actorLists) {
+		for (auto i = 0; i < actors.Num(); ++i) {
+			IfIsA<T>(actors[i], callback);
+		}
+	}
+}
 
 void ProcessEventHook(UObject* pObject, UFunction* pFunction, void* pParms, void* pResult)
 {
+	bool bKeyHome = GetAsyncKeyState(VK_HOME) & 0x01;
+	bool bKeyEnd = GetAsyncKeyState(VK_END) & 0x01;
+
 	auto object_name = pObject->GetFullName();
 	auto function_name = pFunction->GetFullName();
 
-	if (pObject != nullptr && pObject->IsA(UDunDefViewportClient::StaticClass()))
-	{
-		UDunDefViewportClient* pViewport = static_cast<UDunDefViewportClient*>(pObject);
-		if (GetAsyncKeyState(VK_END) & 0x01)
+	IfIsA<UDunDefViewportClient>(pObject, [function_name, bKeyHome, bKeyEnd](UDunDefViewportClient* pViewport) {
+		if (function_name == "Function UDKGame.DunDefViewportClient.PostRender")
 		{
-			auto c = pViewport->GetPlayerController();
-			if (c && c->IsA(ADunDefPlayerController::StaticClass()))
+			IfIsA<ADunDefPlayerController>(pViewport->GetPlayerController(), [bKeyHome, bKeyEnd](ADunDefPlayerController* pController) {
+
+				IfIsA<AWorldInfo>(pController->WorldInfo, [pController, bKeyHome, bKeyEnd](AWorldInfo* pWorldInfo) {
+					IteratePawnList<ADunDefEnemy>(pWorldInfo->PawnList, [](ADunDefEnemy* pEnemy) {
+						if (ValidPawn(pEnemy) && !pEnemy->IsPlayerAlly) {
+							// TODO: We can read information about enemies here
+						}
+					});
+
+					IterateActors<ADunDefDroppedEquipment>(pWorldInfo, [](ADunDefDroppedEquipment* pDrop) {
+						std::cout << "Found drop: " << pDrop->GetFullName() << std::endl;
+						// TODO: And compare dropped gear to our current ones here!
+						// Current gear: pController->MyHero->HeroEquipments
+						// Dropped gear: pDrop->MyEquipmentObject
+					});
+				});
+			});
+		}
+
+		if (function_name == "Function UDKGame.DunDefViewportClient.PostRender")
+		{
+			UCanvas* pCanvas = nullptr;
+			if (pCanvas != nullptr)
 			{
-				auto c2 = static_cast<ADunDefPlayerController*>(c);
-				c2->ActivateCrystalForAllPlayers();
+				//pCanvas->DrawText();
 			}
 		}
-	}
+	});
 
-	if (function_name == "Function UDKGame.DunDefViewportClient.PostRender")
-	{
-		UCanvas* pCanvas = nullptr;
-#undef DrawText
-		if (pCanvas != nullptr)
-		{
-			//pCanvas->DrawText();
-		}
-	}
-	else
+	auto skipLogging = std::find(ignored_functions.begin(), ignored_functions.end(), function_name) != ignored_functions.end();
+	if (!skipLogging)
 	{
 		logfile << "--- call\n";
 		logfile << object_name << "\n";
@@ -103,116 +155,8 @@ void ProcessEventHook(UObject* pObject, UFunction* pFunction, void* pParms, void
 
 		std::cout << object_name << std::endl;
 		std::cout << "- " << function_name << std::endl;
+		ignored_functions.push_back(function_name);
 	}
-
-
-	/*
-	auto skipLogging = std::find(ignoredEvents.begin(), ignoredEvents.end(), function_name) != ignoredEvents.end();
-
-	if (!skipLogging)
-	{
-		logfile << "--- call\n";
-		logfile << object_name << "\n";
-		logfile << function_name << "\n";
-		logfile << "ProcessEvent(" << HEX(pObject) << ", " << HEX(pFunction) << ", " << HEX(pArgs) << ", " << HEX(pResult) << ")" << std::endl;
-	}
-
-	if (pObject->IsA(ADunDefDroppedEquipment::StaticClass()))
-	{
-		auto pDropped = static_cast<ADunDefDroppedEquipment*>(pObject);
-		if (!skipLogging)
-			std::cout << "ADunDefDroppedEquipment :: " << function_name << std::endl;
-
-		if (function_name == "Function Engine.Actor.AllowSpawn"
-			|| function_name == "Function UDKGame.DunDefDroppedEquipment.PostBeginPlay"
-			|| function_name == "Function UDKGame.DunDefDroppedEquipment.ReportEquipmentToStats"
-			|| function_name == "Function UDKGame.DunDefDroppedEquipment.AddToFloorStats"
-			|| function_name == "Function UDKGame.DunDefDroppedEquipment.PlayDroppedSound"
-			)
-		{
-			auto pEquipment = pDropped->MyEquipmentObject;
-			if (pEquipment != nullptr)
-			{
-				std::cout << "pEquipment: " << pEquipment->GetFullName() << std::endl;
-
-				// TODO Check stats
-				//pEquipment->MaxEquipmentLevel
-				for (size_t i = 0; i < 0xB; i++)
-				{
-					//pEquipment->StatModifiers[i]
-				}
-			}
-		}
-	}
-	else if (pObject->IsA(ADunDefPlayer::StaticClass()))
-	{
-		if (!skipLogging)
-			std::cout << "ADunDefPlayer :: " << function_name << std::endl;
-
-		ADunDefPlayer* pPlayer = static_cast<ADunDefPlayer*>(pObject);
-		if (pFunction->GetFullName() == "Function UDKGame.DunDefPlayer.Tick")
-		{
-			// tick
-			auto pHero = pPlayer->MyPlayerHero;
-			if (pHero != nullptr)
-			{
-				pHero->CostOfExpBonus = 0;
-				pHero->bGaveExpBonus = 0;
-			}
-		}
-	}
-	else if (pObject->IsA(ADunDefPlayerController::StaticClass()))
-	{
-		// ADunDefPlayerController :: Function UDKGame.DunDefPlayerController.CheckActivation -> when picking up
-		ADunDefPlayerController* pPlayerController = static_cast<ADunDefPlayerController*>(pObject);
-		if (function_name == "Function UDKGame.DunDefPlayerController.PlayerWalking.PlayerTick")
-		{
-			// tick
-			if (GetAsyncKeyState(VK_END) & 0x01)
-			{
-				for (auto i = 0u; i < UObject::GetGlobalObjects().Num(); ++i)
-				{
-					auto pObject = UObject::GetGlobalObjects().GetByIndex(i);
-					if (pObject != nullptr && pObject->IsA(ADunDefEnemy::StaticClass()))
-					{
-						auto pEnemy = static_cast<ADunDefEnemy*>(pObject);
-						if (ValidPawn(pEnemy))
-						{
-							pEnemy->Health = 0;
-							//pEnemy->lastDamageCauser = pPlayerController;
-							//pEnemy->TrueKiller = pPlayerController;
-							//pEnemy->TrueDamageCauser = pPlayerController;
-							//pEnemy->EnemyLifeSpan = 0.0f;
-							//pEnemy->Location = pPlayerController->Location;
-							pEnemy->Died();
-						}
-					}
-				}
-			}
-
-			auto pHero = pPlayerController->MyHero;
-			pHero->bGaveExpBonus = 0;
-			pHero->CostOfExpBonus = 0;
-
-			// Inspect gear
-			for (size_t i = 0; i < pHero->HeroEquipments.Num(); ++i)
-			{
-				auto pItem = pHero->HeroEquipments[i];
-				// Stats
-				pItem->EquipmentType == EEquipmentType::EQT_ARMOR_TORSO;
-				pItem->StatModifiers;
-				pItem->StatObjectArray;
-				pItem->MaxEquipmentLevel;
-				pItem->DroppedLocation;
-			}
-		}
-		else
-		{
-			if (!skipLogging)
-				std::cout << "ADunDefPlayerController :: " << function_name << std::endl;
-		}
-	}
-	*/
 }
 
 UObject* __pObject;
