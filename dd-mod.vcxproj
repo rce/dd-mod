@@ -155,7 +155,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="framework.h" />
     <ClInclude Include="SDK.hpp" />
     <ClInclude Include="SDK\DD_Basic.hpp" />
     <ClInclude Include="SDK\DD_CDT3_classes.hpp" />
@@ -224,7 +223,6 @@
     <ClInclude Include="SDK\DD_XAudio2_classes.hpp" />
     <ClInclude Include="SDK\DD_XAudio2_parameters.hpp" />
     <ClInclude Include="SDK\DD_XAudio2_structs.hpp" />
-    <ClInclude Include="TrampolineHook.h" />
     <ClInclude Include="VMTHook.h" />
   </ItemGroup>
   <ItemGroup>
