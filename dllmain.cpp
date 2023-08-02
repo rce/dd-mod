@@ -112,7 +112,8 @@ void ProcessEventHook(UObject* pObject, UFunction* pFunction, void* pParms, void
 	IfIsA<UDunDefViewportClient>(pObject, [function_name](UDunDefViewportClient* pViewport) {
 		if (function_name == "Function UDKGame.DunDefViewportClient.PostRender")
 		{
-			IfIsA<ADunDefPlayerController>(pViewport->GetPlayerController(), [](ADunDefPlayerController* pController) {
+			static auto pCachedPlayerController = pViewport->GetPlayerController();
+			IfIsA<ADunDefPlayerController>(pCachedPlayerController, [](ADunDefPlayerController* pController) {
 				IfIsA<AWorldInfo>(pController->WorldInfo, [pController](AWorldInfo* pWorldInfo) {
 					IteratePawnList<ADunDefEnemy>(pWorldInfo->PawnList, [](ADunDefEnemy* pEnemy) {
 						if (ValidPawn(pEnemy) && !pEnemy->IsPlayerAlly) {
