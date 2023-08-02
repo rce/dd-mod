@@ -1,4 +1,6 @@
 // dllmain.cpp : Defines the entry point for the DLL application.
+#define NOMINMAX
+
 #include <locale>
 #include "SDK.hpp"
 #include <string>
@@ -79,10 +81,25 @@ void IterateActors(AWorldInfo* pWorldInfo, std::function<void(T*)> callback)
 		pWorldInfo->FastOverlapListSix,
 	};
 	for (auto& actors : actorLists) {
-		for (auto i = 0; i < actors.Num(); ++i) {
+		for (size_t i = 0; i < actors.Num(); ++i) {
 			IfIsA<T>(actors[i], callback);
 		}
 	}
+}
+
+#include <random>
+std::default_random_engine random_engine;
+std::uniform_real_distribution<float> distribution(-100.0f, 100.0f);
+
+bool KeyPressed(ADunDefPlayerController* pController, const std::string& keyName) {
+	auto GNames = FName::GetGlobalNames();
+	auto keys = pController->PlayerInput->PressedKeys;
+	for (size_t i = 0; i < keys.Num(); ++i)
+	{
+		auto name = GNames.GetByIndex(keys[i].Index);
+		if (name->GetName() == keyName) return true;
+	}
+	return false;
 }
 
 void ProcessEventHook(UObject* pObject, UFunction* pFunction, void* pParms, void* pResult)
@@ -103,31 +120,63 @@ void ProcessEventHook(UObject* pObject, UFunction* pFunction, void* pParms, void
 						}
 					});
 
-					bool bHandleLoot = GetAsyncKeyState(VK_END) & 0x01;
+					static bool bEndPreviouslyPressed = false;
+					bool bEndPressed = KeyPressed(pController, "End");
+					bool bHandleLoot = bEndPressed && !bEndPreviouslyPressed;
+					bEndPreviouslyPressed = bEndPressed;
+
 					IterateActors<ADunDefDroppedEquipment>(pWorldInfo, [pController, bHandleLoot](ADunDefDroppedEquipment* pDrop) {
 						if (!bHandleLoot) return;
 						// TODO: And compare dropped gear to our current ones here!
 						// Current gear: pController->MyHero->HeroEquipments
 						// Dropped gear: pDrop->MyEquipmentObject
+
 						auto pEquipment = pDrop->MyEquipmentObject;
 
-						// 0 = ?
-						// 1 = HERO_HEALTH
-						// 2 = HERO_SPEED
-						// 3 = HERO_DAMAGE
-						// 4 = HERO_CAST_RATE
-						// 5 = HERO_ABILITY ?
-						// 6 = HERO_ABILITY ?
-						// 7 = TOWER_HEALTH
-						// 8 = TOWER_CAST_RATE
-						// 9 = HERO_DAMAGE
-						// 10 = TOWER_RANGE
-						for (size_t i = 0; i < 0xb; i++)
+						const auto LU_HEALTH = static_cast<uint8_t>(ELevelUpValueType::LU_HEALTH); // 1
+						const auto LU_SPEED = static_cast<uint8_t>(ELevelUpValueType::LU_SPEED); // 2
+						const auto LU_DAMAGE = static_cast<uint8_t>(ELevelUpValueType::LU_DAMAGE); // 3
+						const auto LU_CASTINGRATE = static_cast<uint8_t>(ELevelUpValueType::LU_CASTINGRATE); // 4
+						const auto LU_HEROABILITYONE = static_cast<uint8_t>(ELevelUpValueType::LU_HEROABILITYONE); // 5
+						const auto LU_HEROABILITYTWO = static_cast<uint8_t>(ELevelUpValueType::LU_HEROABILITYTWO); // 6
+						const auto LU_DEFENSEHEALTH = static_cast<uint8_t>(ELevelUpValueType::LU_DEFENSEHEALTH); // 7
+						const auto LU_DEFENSEATTACKRATE = static_cast<uint8_t>(ELevelUpValueType::LU_DEFENSEATTACKRATE); // 8
+						const auto LU_DEFENSEBASEDAMAGE = static_cast<uint8_t>(ELevelUpValueType::LU_DEFENSEBASEDAMAGE); // 9
+						const auto LU_DEFENSEAOE = static_cast<uint8_t>(ELevelUpValueType::LU_DEFENSEAOE); // 10
+
+						int totalStats = 0;
+						int maxStat = 0;
+						int totalTowerStats = 0;
+						int totalHeroStats = 0;
+						int heroDamage = pEquipment->StatModifiers[static_cast<uint8_t>(ELevelUpValueType::LU_DAMAGE)];
+
+						for (size_t i = 1; i < 0xB; i++)
 						{
-							if (pEquipment->StatModifiers[i] > 150)
-							{
-								pDrop->SetLocation(pController->Pawn->Location);
-							}
+							totalStats += pEquipment->StatModifiers[i];
+							maxStat = std::max(maxStat, pEquipment->StatModifiers[i]);
+							if (LU_HEALTH <= i && i <= LU_CASTINGRATE) totalHeroStats += pEquipment->StatModifiers[i];
+							if (LU_DEFENSEHEALTH <= i && i <= LU_DEFENSEAOE) totalTowerStats += pEquipment->StatModifiers[i];
+						}
+
+						bool isArmor = EEquipmentType::EQT_ARMOR_TORSO <= pEquipment->EquipmentType && pEquipment->EquipmentType <= EEquipmentType::EQT_ARMOR_GLOVES;
+						bool isAccessory = EEquipmentType::EQT_ACCESSORY1 <= pEquipment->EquipmentType && pEquipment->EquipmentType <= EEquipmentType::EQT_MASK;
+						bool shouldMove = false;
+						// TODO: Check equipment quality?
+						// if (pEquipment->? >= CONST_EQUIPMENT_TRANSCENDENT) shouldMove = true;
+
+						if (isAccessory) shouldMove = true;
+						if (isArmor) {
+							if (heroDamage > 200) shouldMove = true;
+							if (maxStat > 300) shouldMove = true;
+							if (totalTowerStats > 600) shouldMove = true;
+							if (totalHeroStats > 600) shouldMove = true;
+						}
+
+						if (shouldMove) {
+							auto loc = pController->Pawn->Location;
+							loc.X += distribution(random_engine);
+							loc.Y += distribution(random_engine);
+							pDrop->SetLocation(loc);
 						}
 					});
 				});
