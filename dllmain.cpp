@@ -103,20 +103,35 @@ void ProcessEventHook(UObject* pObject, UFunction* pFunction, void* pParms, void
 						}
 					});
 
-					IterateActors<ADunDefDroppedEquipment>(pWorldInfo, [](ADunDefDroppedEquipment* pDrop) {
-						std::cout << "Found drop: " << pDrop->GetFullName() << std::endl;
+					bool bHandleLoot = GetAsyncKeyState(VK_END) & 0x01;
+					IterateActors<ADunDefDroppedEquipment>(pWorldInfo, [pController, bHandleLoot](ADunDefDroppedEquipment* pDrop) {
+						if (!bHandleLoot) return;
 						// TODO: And compare dropped gear to our current ones here!
 						// Current gear: pController->MyHero->HeroEquipments
 						// Dropped gear: pDrop->MyEquipmentObject
+						auto pEquipment = pDrop->MyEquipmentObject;
+
+						// 0 = ?
+						// 1 = HERO_HEALTH
+						// 2 = HERO_SPEED
+						// 3 = HERO_DAMAGE
+						// 4 = HERO_CAST_RATE
+						// 5 = HERO_ABILITY ?
+						// 6 = HERO_ABILITY ?
+						// 7 = TOWER_HEALTH
+						// 8 = TOWER_CAST_RATE
+						// 9 = HERO_DAMAGE
+						// 10 = TOWER_RANGE
+						for (size_t i = 0; i < 0xb; i++)
+						{
+							if (pEquipment->StatModifiers[i] > 150)
+							{
+								pDrop->SetLocation(pController->Pawn->Location);
+							}
+						}
 					});
 				});
 			});
-
-			UCanvas* pCanvas = nullptr;
-			if (pCanvas != nullptr)
-			{
-				//pCanvas->DrawText();
-			}
 		}
 	});
 
