@@ -11,6 +11,12 @@
 #include "VMTHook.h"
 #include <fstream>
 
+extern "C" {
+#include <lua.h>
+#include <lualib.h>
+#include <lauxlib.h>
+}
+
 using namespace Classes;
 
 #define HEX(value) std::setfill('0') << std::setw(8) << std::hex << value << std::dec << std::setfill(' ') << std::setw(0)
@@ -88,8 +94,17 @@ void IterateActors(AWorldInfo* pWorldInfo, std::function<void(T*)> callback)
 }
 
 #include <random>
-std::default_random_engine random_engine;
-std::uniform_real_distribution<float> distribution(-100.0f, 100.0f);
+
+FVector RandomizeLocationXY(FVector v)
+{
+	static std::default_random_engine random_engine;
+	static std::uniform_real_distribution<float> distribution(-100.0f, 100.0f);
+	return FVector{
+		v.X + distribution(random_engine),
+		v.Y + distribution(random_engine),
+		v.Z,
+	};
+}
 
 bool KeyPressed(ADunDefPlayerController* pController, const std::string& keyName) {
 	auto GNames = FName::GetGlobalNames();
@@ -102,6 +117,39 @@ bool KeyPressed(ADunDefPlayerController* pController, const std::string& keyName
 	return false;
 }
 
+void LuaPushEquipment(lua_State* L, UHeroEquipment* pEquipment) {
+	bool isWeapon = pEquipment->EquipmentType == EEquipmentType::EQT_WEAPON;
+	bool isPet = pEquipment->EquipmentType == EEquipmentType::EQT_FAMILIAR;
+	bool isArmor = EEquipmentType::EQT_ARMOR_TORSO <= pEquipment->EquipmentType && pEquipment->EquipmentType <= EEquipmentType::EQT_ARMOR_GLOVES;
+	bool isAccessory = EEquipmentType::EQT_ACCESSORY1 <= pEquipment->EquipmentType && pEquipment->EquipmentType <= EEquipmentType::EQT_MASK;
+
+	lua_createtable(L, 0, 0);
+	lua_pushinteger(L, pEquipment->StatModifiers[static_cast<uint8_t>(ELevelUpValueType::LU_HEALTH)]);
+	lua_setfield(L, -2, "HeroHealth");
+	lua_pushinteger(L, pEquipment->StatModifiers[static_cast<uint8_t>(ELevelUpValueType::LU_SPEED)]);
+	lua_setfield(L, -2, "HeroSpeed");
+	lua_pushinteger(L, pEquipment->StatModifiers[static_cast<uint8_t>(ELevelUpValueType::LU_DAMAGE)]);
+	lua_setfield(L, -2, "HeroDamage");
+	lua_pushinteger(L, pEquipment->StatModifiers[static_cast<uint8_t>(ELevelUpValueType::LU_CASTINGRATE)]);
+	lua_setfield(L, -2, "HeroCastingRate");
+	lua_pushinteger(L, pEquipment->StatModifiers[static_cast<uint8_t>(ELevelUpValueType::LU_HEROABILITYONE)]);
+	lua_setfield(L, -2, "Ability1");
+	lua_pushinteger(L, pEquipment->StatModifiers[static_cast<uint8_t>(ELevelUpValueType::LU_HEROABILITYTWO)]);
+	lua_setfield(L, -2, "Ability2");
+	lua_pushinteger(L, pEquipment->StatModifiers[static_cast<uint8_t>(ELevelUpValueType::LU_DEFENSEHEALTH)]);
+	lua_setfield(L, -2, "TowerHealth");
+	lua_pushinteger(L, pEquipment->StatModifiers[static_cast<uint8_t>(ELevelUpValueType::LU_DEFENSEATTACKRATE)]);
+	lua_setfield(L, -2, "TowerSpeed");
+	lua_pushinteger(L, pEquipment->StatModifiers[static_cast<uint8_t>(ELevelUpValueType::LU_DEFENSEBASEDAMAGE)]);
+	lua_setfield(L, -2, "TowerDamage");
+	lua_pushinteger(L, pEquipment->StatModifiers[static_cast<uint8_t>(ELevelUpValueType::LU_DEFENSEAOE)]);
+	lua_setfield(L, -2, "TowerArea");
+	lua_pushinteger(L, pEquipment->MaxEquipmentLevel);
+	lua_setfield(L, -2, "Upgrades");
+	lua_pushstring(L, isArmor ? "armor" : isAccessory ? "accessory" : isWeapon ? "weapon" : isPet ? "pet" : "unknown");
+	lua_setfield(L, -2, "EquipmentType");
+}
+
 void ProcessEventHook(UObject* pObject, UFunction* pFunction, void* pParms, void* pResult)
 {
 	static std::vector<std::string> seen_functions{};
@@ -112,8 +160,7 @@ void ProcessEventHook(UObject* pObject, UFunction* pFunction, void* pParms, void
 	IfIsA<UDunDefViewportClient>(pObject, [function_name](UDunDefViewportClient* pViewport) {
 		if (function_name == "Function UDKGame.DunDefViewportClient.PostRender")
 		{
-			static auto pCachedPlayerController = pViewport->GetPlayerController();
-			IfIsA<ADunDefPlayerController>(pCachedPlayerController, [](ADunDefPlayerController* pController) {
+			IfIsA<ADunDefPlayerController>(pViewport->GetPlayerController(), [](ADunDefPlayerController* pController) {
 				IfIsA<AWorldInfo>(pController->WorldInfo, [pController](AWorldInfo* pWorldInfo) {
 					IteratePawnList<ADunDefEnemy>(pWorldInfo->PawnList, [](ADunDefEnemy* pEnemy) {
 						if (ValidPawn(pEnemy) && !pEnemy->IsPlayerAlly) {
@@ -125,61 +172,55 @@ void ProcessEventHook(UObject* pObject, UFunction* pFunction, void* pParms, void
 					bool bEndPressed = KeyPressed(pController, "End");
 					bool bHandleLoot = bEndPressed && !bEndPreviouslyPressed;
 					bEndPreviouslyPressed = bEndPressed;
+					if (bHandleLoot)
+					{
+						auto L = luaL_newstate();
+						luaL_openlibs(L);
+						if (luaL_dofile(L, "custom.lua") == LUA_OK) {
+							lua_pop(L, lua_gettop(L));
 
-					IterateActors<ADunDefDroppedEquipment>(pWorldInfo, [pController, bHandleLoot](ADunDefDroppedEquipment* pDrop) {
-						if (!bHandleLoot) return;
-						// TODO: And compare dropped gear to our current ones here!
-						// Current gear: pController->MyHero->HeroEquipments
-						// Dropped gear: pDrop->MyEquipmentObject
+							IterateActors<ADunDefDroppedEquipment>(pWorldInfo, [pController, bHandleLoot, &L](ADunDefDroppedEquipment* pDrop) {
+								auto pEquipment = pDrop->MyEquipmentObject;
+								UHeroEquipment* pCurrent = nullptr;
+								UHeroEquipment* pCurrent2 = nullptr;
 
-						auto pEquipment = pDrop->MyEquipmentObject;
+								for (size_t i = 0; i < pController->MyHero->HeroEquipments.Num(); i++) {
+									auto pEquip = pController->MyHero->HeroEquipments[i];
+									if (pEquip->EquipmentType == pEquipment->EquipmentType) {
+										if (pCurrent == nullptr) pCurrent = pEquip;
+										else if (pCurrent2 == nullptr) pCurrent2 = pEquip;
+										else break;
+									}
+								}
 
-						const auto LU_HEALTH = static_cast<uint8_t>(ELevelUpValueType::LU_HEALTH); // 1
-						const auto LU_SPEED = static_cast<uint8_t>(ELevelUpValueType::LU_SPEED); // 2
-						const auto LU_DAMAGE = static_cast<uint8_t>(ELevelUpValueType::LU_DAMAGE); // 3
-						const auto LU_CASTINGRATE = static_cast<uint8_t>(ELevelUpValueType::LU_CASTINGRATE); // 4
-						const auto LU_HEROABILITYONE = static_cast<uint8_t>(ELevelUpValueType::LU_HEROABILITYONE); // 5
-						const auto LU_HEROABILITYTWO = static_cast<uint8_t>(ELevelUpValueType::LU_HEROABILITYTWO); // 6
-						const auto LU_DEFENSEHEALTH = static_cast<uint8_t>(ELevelUpValueType::LU_DEFENSEHEALTH); // 7
-						const auto LU_DEFENSEATTACKRATE = static_cast<uint8_t>(ELevelUpValueType::LU_DEFENSEATTACKRATE); // 8
-						const auto LU_DEFENSEBASEDAMAGE = static_cast<uint8_t>(ELevelUpValueType::LU_DEFENSEBASEDAMAGE); // 9
-						const auto LU_DEFENSEAOE = static_cast<uint8_t>(ELevelUpValueType::LU_DEFENSEAOE); // 10
+								bool shouldMove = false;
+								lua_getglobal(L, "ShouldLoot"); // func
+								if (lua_isfunction(L, -1)) {
+									LuaPushEquipment(L, pEquipment);
+									if (pCurrent) LuaPushEquipment(L, pCurrent); else lua_pushnil(L);
+									if (pCurrent2) LuaPushEquipment(L, pCurrent); else lua_pushnil(L);
 
-						int totalStats = 0;
-						int maxStat = 0;
-						int totalTowerStats = 0;
-						int totalHeroStats = 0;
-						int heroDamage = pEquipment->StatModifiers[static_cast<uint8_t>(ELevelUpValueType::LU_DAMAGE)];
+									const int argCount = 3;
+									const int returnCount = 1;
+									if (lua_pcall(L, argCount, returnCount, 0) == LUA_OK) {
+										if (lua_isboolean(L, -1)) {
+											bool result = lua_toboolean(L, -1);
+											lua_pop(L, 1); // pop result
+											shouldMove = result;
+										}
+									}
+								}
 
-						for (size_t i = 1; i < 0xB; i++)
-						{
-							totalStats += pEquipment->StatModifiers[i];
-							maxStat = std::max(maxStat, pEquipment->StatModifiers[i]);
-							if (LU_HEALTH <= i && i <= LU_CASTINGRATE) totalHeroStats += pEquipment->StatModifiers[i];
-							if (LU_DEFENSEHEALTH <= i && i <= LU_DEFENSEAOE) totalTowerStats += pEquipment->StatModifiers[i];
+								if (shouldMove) pDrop->SetLocation(RandomizeLocationXY(pController->Pawn->Location));
+								});
+						}
+						else {
+							std::cout << "Error loading lua script" << std::endl;
+							bHandleLoot = false;
 						}
 
-						bool isArmor = EEquipmentType::EQT_ARMOR_TORSO <= pEquipment->EquipmentType && pEquipment->EquipmentType <= EEquipmentType::EQT_ARMOR_GLOVES;
-						bool isAccessory = EEquipmentType::EQT_ACCESSORY1 <= pEquipment->EquipmentType && pEquipment->EquipmentType <= EEquipmentType::EQT_MASK;
-						bool shouldMove = false;
-						// TODO: Check equipment quality?
-						// if (pEquipment->? >= CONST_EQUIPMENT_TRANSCENDENT) shouldMove = true;
-
-						if (isAccessory) shouldMove = true;
-						if (isArmor) {
-							if (heroDamage > 200) shouldMove = true;
-							if (maxStat > 300) shouldMove = true;
-							if (totalTowerStats > 600) shouldMove = true;
-							if (totalHeroStats > 600) shouldMove = true;
-						}
-
-						if (shouldMove) {
-							auto loc = pController->Pawn->Location;
-							loc.X += distribution(random_engine);
-							loc.Y += distribution(random_engine);
-							pDrop->SetLocation(loc);
-						}
-					});
+						lua_close(L);
+					}
 				});
 			});
 		}
