@@ -19,6 +19,10 @@ extern "C" {
 
 using namespace Classes;
 
+const uintptr_t GNAMES_ADDR = 0x01138f14;
+const uintptr_t GOBJECTS_ADDR = 0x0114b22c;
+const uintptr_t PROCESSEVENT_INDEX = 0x104 / sizeof(void*);
+
 #define HEX(value) std::setfill('0') << std::setw(8) << std::hex << value << std::dec << std::setfill(' ') << std::setw(0)
 
 std::ofstream logfile;
@@ -42,14 +46,10 @@ void initConsole()
 	}
 }
 
-template <typename T>
-void SafeDelete(T*& ptr)
+template<typename C, typename V>
+bool contains(C coll, V value)
 {
-	if (ptr != nullptr)
-	{
-		delete ptr;
-		ptr = nullptr;
-	}
+	return std::find(coll.begin(), coll.end(), value) != coll.end();
 }
 
 #include <sstream>
@@ -108,6 +108,7 @@ FVector RandomizeLocationXY(FVector v)
 
 bool KeyPressed(ADunDefPlayerController* pController, const std::string& keyName) {
 	auto GNames = FName::GetGlobalNames();
+	if (pController->PlayerInput == nullptr) return false;
 	auto keys = pController->PlayerInput->PressedKeys;
 	for (size_t i = 0; i < keys.Num(); ++i)
 	{
@@ -150,36 +151,53 @@ void LuaPushEquipment(lua_State* L, UHeroEquipment* pEquipment) {
 	lua_setfield(L, -2, "EquipmentType");
 }
 
+#define KEY_PRESSED(keyName) \
+	static bool b##keyName##PreviouslyPressed = false; \
+	bool b##keyName##Pressed = KeyPressed(pController, #keyName); \
+	bool b##keyName##WasPressed = b##keyName##Pressed && !b##keyName##PreviouslyPressed; \
+	b##keyName##PreviouslyPressed = b##keyName##Pressed;
+
+#define IF_KEY_PRESSED(keyName) \
+	KEY_PRESSED(keyName) \
+	if (b##keyName##WasPressed)
+
+void ProcessEventHook_Trampoline();
+
 void ProcessEventHook(UObject* pObject, UFunction* pFunction, void* pParms, void* pResult)
 {
-	static std::vector<std::string> seen_functions{};
-
 	auto object_name = pObject->GetFullName();
 	auto function_name = pFunction->GetFullName();
 
 	IfIsA<UDunDefViewportClient>(pObject, [function_name](UDunDefViewportClient* pViewport) {
-		if (function_name == "Function UDKGame.DunDefViewportClient.PostRender")
+		if (function_name == "Function Engine.GameViewportClient.LayoutPlayers")
 		{
-			IfIsA<ADunDefPlayerController>(pViewport->GetPlayerController(), [](ADunDefPlayerController* pController) {
-				IfIsA<AWorldInfo>(pController->WorldInfo, [pController](AWorldInfo* pWorldInfo) {
-					IteratePawnList<ADunDefEnemy>(pWorldInfo->PawnList, [](ADunDefEnemy* pEnemy) {
-						if (ValidPawn(pEnemy) && !pEnemy->IsPlayerAlly) {
-							// TODO: We can read information about enemies here
-						}
-					});
+			// We grab and hook the player controller here because calling GetPlayerController()
+			// on every frame breaks parts of the UI such as viewing minimap and hides the cursor.
+			static APlayerController* pKnownController = nullptr;
+			auto pController = pViewport->GetPlayerController();
+			if (pController != pKnownController) {
+				pKnownController = pController;
+				std::cout << "New controller: " << HEX(pController) << std::endl;
+				BareVMTHook(pController, PROCESSEVENT_INDEX, ProcessEventHook_Trampoline);
+			}
+		}
+	});
 
-					static bool bEndPreviouslyPressed = false;
-					bool bEndPressed = KeyPressed(pController, "End");
-					bool bHandleLoot = bEndPressed && !bEndPreviouslyPressed;
-					bEndPreviouslyPressed = bEndPressed;
-					if (bHandleLoot)
-					{
+	IfIsA<ADunDefPlayerController>(pObject, [function_name](ADunDefPlayerController* pController) {
+		if (function_name == "Function Engine.PlayerController.Destroyed") {
+			// TODO Cleanup this player controller hook
+		} else if (function_name == "Function UDKGame.DunDefPlayerController.PlayerWalking.PlayerTick") {
+			IfIsA<ADunDefPlayerController>(pController, [](ADunDefPlayerController* pController) {
+				IfIsA<AWorldInfo>(pController->WorldInfo, [pController](AWorldInfo* pWorldInfo) {
+					IF_KEY_PRESSED(End) {
 						auto L = luaL_newstate();
 						luaL_openlibs(L);
-						if (luaL_dofile(L, "custom.lua") == LUA_OK) {
+						if (luaL_dofile(L, "custom.lua") != LUA_OK) {
+							std::cout << "Lua error: " << lua_tostring(L, lua_gettop(L)) << std::endl;
+						} else {
 							lua_pop(L, lua_gettop(L));
 
-							IterateActors<ADunDefDroppedEquipment>(pWorldInfo, [pController, bHandleLoot, &L](ADunDefDroppedEquipment* pDrop) {
+							IterateActors<ADunDefDroppedEquipment>(pWorldInfo, [pController, &L](ADunDefDroppedEquipment* pDrop) {
 								auto pEquipment = pDrop->MyEquipmentObject;
 								UHeroEquipment* pCurrent = nullptr;
 								UHeroEquipment* pCurrent2 = nullptr;
@@ -194,7 +212,9 @@ void ProcessEventHook(UObject* pObject, UFunction* pFunction, void* pParms, void
 								}
 
 								bool shouldMove = false;
-								lua_getglobal(L, "ShouldLoot"); // func
+								// Call function ShouldLoot(droppedEquipment, currentEquipment, currentEquipment2)
+								// to figure out whether the equipment should be moved to the player
+								lua_getglobal(L, "ShouldLoot");
 								if (lua_isfunction(L, -1)) {
 									LuaPushEquipment(L, pEquipment);
 									if (pCurrent) LuaPushEquipment(L, pCurrent); else lua_pushnil(L);
@@ -205,18 +225,18 @@ void ProcessEventHook(UObject* pObject, UFunction* pFunction, void* pParms, void
 									if (lua_pcall(L, argCount, returnCount, 0) == LUA_OK) {
 										if (lua_isboolean(L, -1)) {
 											bool result = lua_toboolean(L, -1);
-											lua_pop(L, 1); // pop result
+											lua_pop(L, 1);
 											shouldMove = result;
 										}
 									}
 								}
 
-								if (shouldMove) pDrop->SetLocation(RandomizeLocationXY(pController->Pawn->Location));
-								});
-						}
-						else {
-							std::cout << "Error loading lua script" << std::endl;
-							bHandleLoot = false;
+								if (shouldMove) {
+									if (pController->Pawn != nullptr) {
+										pDrop->SetLocation(RandomizeLocationXY(pController->Pawn->Location));
+									}
+								}
+							});
 						}
 
 						lua_close(L);
@@ -226,8 +246,8 @@ void ProcessEventHook(UObject* pObject, UFunction* pFunction, void* pParms, void
 		}
 	});
 
-	auto skipLogging = std::find(seen_functions.begin(), seen_functions.end(), function_name) != seen_functions.end();
-	if (!skipLogging)
+	static std::vector<std::string> seen_functions{};
+	if (!contains(seen_functions, function_name))
 	{
 		logfile << "--- call\n";
 		logfile << object_name << "\n";
@@ -284,15 +304,6 @@ void MainThread()
 		std::cout << "Running" << std::endl;
 		logfile = std::ofstream("logfile.txt");
 
-
-		uintptr_t PROCESSEVENT_ADDR = 0x00484490;
-		//uintptr_t PROCESSEVENT_ADDR = 0x0060A640;
- 
-		uintptr_t PROCESSEVENT_INDEX = 0x104 / sizeof(void*);
-
-		const uintptr_t GNAMES_ADDR = 0x01138f14;
-		const uintptr_t GOBJECTS_ADDR = 0x0114b22c;
-
 		FName::GNames = (TArray<FNameEntry*>*) GNAMES_ADDR;
 		UObject::GObjects =(TArray<UObject*>*) GOBJECTS_ADDR;
 
@@ -300,7 +311,7 @@ void MainThread()
 		auto pDunDefViewportClient = UObject::FindObjectStartingWith<UDunDefViewportClient>("DunDefViewportClient Transient.");
 		if (pDunDefViewportClient != nullptr)
 		{
-			std::cout << "Hooking ProcessEvent through DunDefViewportClient" << std::endl;
+			std::cout << "Hooking ProcessEvent through DunDefViewportClient " << HEX(pDunDefViewportClient) << std::endl;
 			pProcessEvent = BareVMTHook(pDunDefViewportClient, PROCESSEVENT_INDEX, ProcessEventHook_Trampoline);
 			std::cout << "pProcessEvent: " << HEX(pProcessEvent) << std::endl;
 		}
