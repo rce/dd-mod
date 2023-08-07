@@ -28,6 +28,13 @@ const uintptr_t GNAMES_ADDR = 0x01138f14;
 const uintptr_t GOBJECTS_ADDR = 0x0114b22c;
 const uintptr_t PROCESSEVENT_INDEX = 0x104 / sizeof(void*);
 
+struct ProcessEventHookDetails {
+	int ObjectInternalInteger;
+	VMTHookDetails hookDetails;
+};
+std::vector<ProcessEventHookDetails> g_ProcessEventHookDetails{};
+ProcessEventHookDetails SetProcessEventHook(UObject* pObject);
+
 #define HEX(value) std::setfill('0') << std::setw(8) << std::hex << value << std::dec << std::setfill(' ') << std::setw(0)
 
 std::ofstream logfile;
@@ -195,7 +202,7 @@ void ProcessEventHook(UObject* pObject, UFunction* pFunction, void* pParms, void
 			if (pController != pKnownController) {
 				pKnownController = pController;
 				std::cout << "New controller: " << HEX(pController) << std::endl;
-				BareVMTHook(pController, PROCESSEVENT_INDEX, ProcessEventHook_Trampoline);
+				SetProcessEventHook(pController);
 			}
 		}
 	});
@@ -318,6 +325,26 @@ void __declspec(naked) ProcessEventHook_Trampoline()
 		retn 0xC
 	}
 }
+ProcessEventHookDetails SetProcessEventHook(UObject* pObject) {
+	auto details = BareVMTHook(pObject, PROCESSEVENT_INDEX, ProcessEventHook_Trampoline);
+	ProcessEventHookDetails hook_info{ pObject->ObjectInternalInteger, details };
+	g_ProcessEventHookDetails.push_back(hook_info);
+	return hook_info;
+}
+
+void RemoveProcessEventHooks() {
+	for (auto& hook : g_ProcessEventHookDetails) {
+		for (size_t i = 0; i < UObject::GObjects->Num(); ++i) {
+			if (UObject::GObjects->IsValidIndex(i)) {
+				auto pObject = UObject::GObjects->GetByIndex(i);
+				if ((void*)pObject == (void*)hook.hookDetails.object) {
+					RevertVMTHook(hook.hookDetails);
+				}
+			}
+		}
+	}
+	g_ProcessEventHookDetails.clear();
+}
 
 void MainThread()
 {
@@ -337,7 +364,7 @@ void MainThread()
 		if (pDunDefViewportClient != nullptr)
 		{
 			std::cout << "Hooking ProcessEvent through DunDefViewportClient " << HEX(pDunDefViewportClient) << std::endl;
-			pProcessEvent = BareVMTHook(pDunDefViewportClient, PROCESSEVENT_INDEX, ProcessEventHook_Trampoline);
+			pProcessEvent = SetProcessEventHook(pDunDefViewportClient).hookDetails.original_function;
 			std::cout << "pProcessEvent: " << HEX(pProcessEvent) << std::endl;
 		}
 		else
@@ -347,8 +374,9 @@ void MainThread()
 
 		while (!(GetAsyncKeyState(VK_INSERT) & 0x01)) Sleep(100);
 		std::cout << "Cleaning up" << std::endl;
-		// TODO Cleanup ProcessEvent hooks
+		RemoveProcessEventHooks();
 		CleanupRenderHook();
+		std::cout << "Cleaned up" << std::endl;
 	}
 	catch (std::exception& ex)
 	{
