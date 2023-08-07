@@ -10,6 +10,11 @@
 #include <Windows.h>
 #include "VMTHook.h"
 #include <fstream>
+#include "DirectXHook.h"
+#include <random>
+#include <sstream>
+#include <functional>
+#include "imgui.h"
 
 extern "C" {
 #include <lua.h>
@@ -52,9 +57,6 @@ bool contains(C coll, V value)
 	return std::find(coll.begin(), coll.end(), value) != coll.end();
 }
 
-#include <sstream>
-#include <functional>
-
 template <typename T>
 void IfIsA(UObject* pObject, std::function<void(T*)> callback)
 {
@@ -92,8 +94,6 @@ void IterateActors(AWorldInfo* pWorldInfo, std::function<void(T*)> callback)
 		}
 	}
 }
-
-#include <random>
 
 FVector RandomizeLocationXY(FVector v)
 {
@@ -161,6 +161,23 @@ void LuaPushEquipment(lua_State* L, UHeroEquipment* pEquipment) {
 	KEY_PRESSED(keyName) \
 	if (b##keyName##WasPressed)
 
+static int lua_imgui_print(lua_State* L) {
+	int nargs = lua_gettop(L);
+	std::string logline = "";
+	for (int i = 1; i <= nargs; ++i) {
+		if (lua_isstring(L, i)) {
+			auto str =lua_tostring(L, i);
+			logline += str;
+		}
+		else {
+			lua_pop(L, i);
+		}
+	}
+	std::cout << "lua_imgui_print: " << logline.c_str() << std::endl;
+	AddLogLine(logline);
+	return 0;
+}
+
 void ProcessEventHook_Trampoline();
 
 void ProcessEventHook(UObject* pObject, UFunction* pFunction, void* pParms, void* pResult)
@@ -192,6 +209,13 @@ void ProcessEventHook(UObject* pObject, UFunction* pFunction, void* pParms, void
 					IF_KEY_PRESSED(End) {
 						auto L = luaL_newstate();
 						luaL_openlibs(L);
+						static const struct luaL_Reg printlib[] = {
+							{"print", lua_imgui_print},
+							{NULL, NULL},
+						};
+						lua_getglobal(L, "_G");
+						luaL_setfuncs(L, printlib, 0);
+						lua_pop(L, 1);
 						if (luaL_dofile(L, "custom.lua") != LUA_OK) {
 							std::cout << "Lua error: " << lua_tostring(L, lua_gettop(L)) << std::endl;
 						} else {
@@ -302,6 +326,7 @@ void MainThread()
 	try
 	{
 		std::cout << "Running" << std::endl;
+		SetupRenderHook();
 		logfile = std::ofstream("logfile.txt");
 
 		FName::GNames = (TArray<FNameEntry*>*) GNAMES_ADDR;
@@ -319,6 +344,11 @@ void MainThread()
 		{
 			std::cout << "Failed to hook ProcessEvent" << std::endl;
 		}
+
+		while (!(GetAsyncKeyState(VK_INSERT) & 0x01)) Sleep(100);
+		std::cout << "Cleaning up" << std::endl;
+		// TODO Cleanup ProcessEvent hooks
+		CleanupRenderHook();
 	}
 	catch (std::exception& ex)
 	{

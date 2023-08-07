@@ -78,7 +78,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>.\3rdparty\lua;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\3rdparty\lua;.\3rdparty\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
@@ -99,7 +99,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>.\3rdparty\lua;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\3rdparty\lua;.\3rdparty\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
@@ -120,7 +120,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>.\3rdparty\lua;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\3rdparty\lua;.\3rdparty\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
@@ -141,7 +141,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>.\3rdparty\lua;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\3rdparty\lua;.\3rdparty\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
@@ -155,6 +155,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="3rdparty\imgui\backends\imgui_impl_dx9.h" />
+    <ClInclude Include="3rdparty\imgui\backends\imgui_impl_win32.h" />
+    <ClInclude Include="3rdparty\imgui\imgui.h" />
     <ClInclude Include="3rdparty\lua\lapi.h" />
     <ClInclude Include="3rdparty\lua\lauxlib.h" />
     <ClInclude Include="3rdparty\lua\lcode.h" />
@@ -182,6 +185,7 @@
     <ClInclude Include="3rdparty\lua\lundump.h" />
     <ClInclude Include="3rdparty\lua\lvm.h" />
     <ClInclude Include="3rdparty\lua\lzio.h" />
+    <ClInclude Include="DirectXHook.h" />
     <ClInclude Include="SDK.hpp" />
     <ClInclude Include="SDK\DD_Basic.hpp" />
     <ClInclude Include="SDK\DD_CDT3_classes.hpp" />
@@ -253,6 +257,12 @@
     <ClInclude Include="VMTHook.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="3rdparty\imgui\backends\imgui_impl_dx9.cpp" />
+    <ClCompile Include="3rdparty\imgui\backends\imgui_impl_win32.cpp" />
+    <ClCompile Include="3rdparty\imgui\imgui.cpp" />
+    <ClCompile Include="3rdparty\imgui\imgui_draw.cpp" />
+    <ClCompile Include="3rdparty\imgui\imgui_tables.cpp" />
+    <ClCompile Include="3rdparty\imgui\imgui_widgets.cpp" />
     <ClCompile Include="3rdparty\lua\lapi.c" />
     <ClCompile Include="3rdparty\lua\lauxlib.c" />
     <ClCompile Include="3rdparty\lua\lbaselib.c" />
@@ -286,6 +296,7 @@
     <ClCompile Include="3rdparty\lua\lutf8lib.c" />
     <ClCompile Include="3rdparty\lua\lvm.c" />
     <ClCompile Include="3rdparty\lua\lzio.c" />
+    <ClCompile Include="DirectXHook.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="SDK\DD_Basic.cpp" />
     <ClCompile Include="SDK\DD_CDT3_functions.cpp" />
