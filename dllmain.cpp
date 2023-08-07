@@ -87,6 +87,7 @@ void IteratePawnList(APawn* pPawn, std::function<void(T*)> callback)
 template <typename T>
 void IterateActors(AWorldInfo* pWorldInfo, std::function<void(T*)> callback)
 {
+	std::set<int> seenActors{};
 	auto actorLists = std::vector{
 		pWorldInfo->FastOverlapListOne,
 		pWorldInfo->FastOverlapListTwo,
@@ -97,7 +98,11 @@ void IterateActors(AWorldInfo* pWorldInfo, std::function<void(T*)> callback)
 	};
 	for (auto& actors : actorLists) {
 		for (size_t i = 0; i < actors.Num(); ++i) {
-			IfIsA<T>(actors[i], callback);
+			auto a = actors[i];
+			if (!contains(seenActors, a->ObjectInternalInteger)) {
+				seenActors.insert(a->ObjectInternalInteger);
+				IfIsA<T>(a, callback);
+			}
 		}
 	}
 }
