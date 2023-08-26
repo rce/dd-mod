@@ -220,7 +220,12 @@ void ProcessEventHook(UObject* pObject, UFunction* pFunction, void* pParms, void
 
 	IfIsA<ADunDefPlayerController>(pObject, [function_name](ADunDefPlayerController* pController) {
 		if (function_name == "Function Engine.PlayerController.Destroyed") {
-			// TODO Cleanup this player controller hook
+			std::cout << "Removing hook from destroyed PlayerController" << std::endl;
+			auto it = std::find_if(g_ProcessEventHookDetails.begin(), g_ProcessEventHookDetails.end(), [&](ProcessEventHookDetails details) {
+				return details.hookDetails.object == (object_t*)pController;
+			});
+			RevertVMTHook(it->hookDetails);
+			g_ProcessEventHookDetails.erase(it);
 		} else if (function_name == "Function UDKGame.DunDefPlayerController.PlayerWalking.PlayerTick") {
 			IfIsA<ADunDefPlayerController>(pController, [](ADunDefPlayerController* pController) {
 				IfIsA<AWorldInfo>(pController->WorldInfo, [pController](AWorldInfo* pWorldInfo) {
