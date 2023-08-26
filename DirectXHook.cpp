@@ -60,9 +60,14 @@ void RenderOverlay(IDirect3DDevice9* pDevice)
 
 }
 
+void ClearLog()
+{
+	g_LogLines.clear();
+}
+
 void AddLogLine(const std::string& str)
 {
-	const size_t MAX_LOG_SIZE = 20;
+	const size_t MAX_LOG_SIZE = 100;
 	if (g_LogLines.size() == MAX_LOG_SIZE) {
 		g_LogLines.erase(g_LogLines.begin());
 	}

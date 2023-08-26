@@ -219,6 +219,7 @@ void ProcessEventHook(UObject* pObject, UFunction* pFunction, void* pParms, void
 			IfIsA<ADunDefPlayerController>(pController, [](ADunDefPlayerController* pController) {
 				IfIsA<AWorldInfo>(pController->WorldInfo, [pController](AWorldInfo* pWorldInfo) {
 					IF_KEY_PRESSED(End) {
+						ClearLog();
 						auto L = luaL_newstate();
 						luaL_openlibs(L);
 						static const struct luaL_Reg printlib[] = {
@@ -229,7 +230,9 @@ void ProcessEventHook(UObject* pObject, UFunction* pFunction, void* pParms, void
 						luaL_setfuncs(L, printlib, 0);
 						lua_pop(L, 1);
 						if (luaL_dofile(L, "custom.lua") != LUA_OK) {
-							std::cout << "Lua error: " << lua_tostring(L, lua_gettop(L)) << std::endl;
+							std::string error(lua_tostring(L, lua_gettop(L)));
+							std::cout << "Lua error: " << error << std::endl;
+							AddLogLine("Lua error: " + error);
 						} else {
 							lua_pop(L, lua_gettop(L));
 
