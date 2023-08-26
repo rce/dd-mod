@@ -194,20 +194,26 @@ void ProcessEventHook_Trampoline();
 
 void ProcessEventHook(UObject* pObject, UFunction* pFunction, void* pParms, void* pResult)
 {
+	static APlayerController* pKnownController = nullptr;
 	auto object_name = pObject->GetFullName();
 	auto function_name = pFunction->GetFullName();
 
-	IfIsA<UDunDefViewportClient>(pObject, [function_name](UDunDefViewportClient* pViewport) {
+	IfIsA<UDunDefViewportClient>(pObject, [&](UDunDefViewportClient* pViewport) {
 		if (function_name == "Function Engine.GameViewportClient.LayoutPlayers")
 		{
 			// We grab and hook the player controller here because calling GetPlayerController()
 			// on every frame breaks parts of the UI such as viewing minimap and hides the cursor.
-			static APlayerController* pKnownController = nullptr;
-			auto pController = pViewport->GetPlayerController();
-			if (pController != pKnownController) {
-				pKnownController = pController;
-				std::cout << "New controller: " << HEX(pController) << std::endl;
-				SetProcessEventHook(pController);
+			// ...and call only every second or so since calling on every LayoutPlayers call breaks split screen.
+			static auto lastCheck = GetTickCount64();
+			auto now = GetTickCount64();
+			if (now - lastCheck > 1000) {
+				auto pController = pViewport->GetPlayerController();
+				if (pController != pKnownController) {
+					pKnownController = pController;
+					std::cout << "New controller: " << HEX(pController) << std::endl;
+					SetProcessEventHook(pController);
+				}
+				lastCheck = now;
 			}
 		}
 	});
